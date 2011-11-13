@@ -1,0 +1,359 @@
+" Vimrc for Jansen Price <jansen.price@gmail.com>
+
+" Basics
+    call pathogen#infect()
+    set nocompatible " Disable vi-compatible mode
+    set background=dark
+"
+
+" GUI Settings
+    if has('gui_running')
+        " Set colorscheme
+        colorscheme tango
+
+        "size of window
+        set columns=84
+        set lines=46
+
+        set guioptions-=T
+        set guioptions-=m
+        set guioptions-=M
+        set guioptions+=r
+        set guioptions+=l
+
+        if has('win32')
+            set guifont=Envy_Code_R:h10:cANSI
+        else
+            set guifont=Envy\ Code\ R\ 10
+        endif
+
+        "maximize (windows only)
+        if has('win32')
+            au GUIEnter * simalt ~x
+        endif
+    else
+        " Set colorscheme
+        colorscheme tango
+    endif
+"
+
+" General
+    syntax on
+    filetype plugin indent on " load filetype plugins/indent settings
+    "set autochdir " always switch to the current file directory
+    set autowrite " Automatically save before commands like :next and :make
+    set backspace=indent,eol,start " more powerful backspacing
+    set directory=~/.vim/tmp " Set directory for swap files
+    set fileformats=unix,dos " Support for fileformats
+    "set hidden " Hide buffers when they are abandoned
+    set mouse=a " Enable mouse usage (all modes) in terminals
+    set nobackup " Don't make backup files
+    set noerrorbells " Don't beep for error messages
+    set novisualbell " No visual bell
+    set showcmd " Show (partial) command in status line
+    "set vb t_vb= " No beeps or flash
+    set wildmenu " Use enhanced mode of command-line completion
+    set encoding=utf-8 " Set utf-8 encoding
+"
+
+" Vim UI Settings
+    set hlsearch " Highlight search
+    set incsearch " Incremental search
+    set laststatus=2 " Always show status line
+    set lazyredraw " Do not redraw while running macros
+    "set listchars=eol:#,tab:>-,trail:# " Whitespace characters
+    set listchars=tab:>- " Whitespace characters
+    set list " Show whitespace characters
+    set number " Show line numbers
+    set ruler " Show the line and col number of the cursor position
+    set scrolloff=2 " Keep 2 lines on top and bottom
+    set showmatch " Show matching brackets.
+    set showtabline=2 " Always show the tabline (helpful for window size)
+    set smartcase " Use smart case searching
+    set statusline=[%n]\ %f\ %m%r%h%w%=[%{&ff}]\ [ai\ %{&ai}]\ [et\ %{&et}]\ [%l,%v]\ [%LL][%p%%]
+    set ttyfast " Fast terminal for smoother redrawing
+    set synmaxcol=512 " Only apply syntax coloring for lines up to 512 chars
+"
+
+" Text Formatting/Layout
+    set autoindent
+    set expandtab " Use spaces not tabs
+    set shiftwidth=4 " Number of spaces to use for indentation
+    set softtabstop=4 " How many spaces per tab
+    set tabstop=4 " Number of spaces that a tab counts
+    set wrap
+    set showbreak=↪
+    set textwidth=79 " Autmatically break long lines while typing
+"
+
+" Folding
+    set foldenable " Turn on folding
+    set foldmethod=marker " Fold using markers
+"
+
+" Autocommands
+    " PHP
+        " Set make program
+        au BufRead,BufNewFile *.php set makeprg=php\ -l\ %
+        au BufRead,BufNewFile *.php set errorformat=%m\ in\ %f\ on\ line\ %l
+
+        " Set dictionary for PHP
+        au BufRead,BufNewFile *.php set dictionary=~/.vim/dict/php
+    "
+
+    " epub
+    au BufReadCmd   *.epub      call zip#Browse(expand("<amatch>"))
+
+    highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+    "match OverLength /\%81v.*/
+
+    if (has("autocmd"))
+        "autocmd bufwritepost .vimrc source $MYVIMRC
+    endif
+"
+
+" Mappings
+    "map F2 to toggle highlight search results
+    map <F2> :set hlsearch!<CR>:set hlsearch?<CR>
+
+    "map C-F2 to toggle spell check mode
+    map <C-F2> :set spell!<CR>:set spell?<CR>
+
+    "map F3 and F4 to cycle through buffers
+    map <C-F3> :bprev<CR>
+    map <C-F4> :bnext<CR>
+
+    "map F4 to make the font size BIG
+    map <F4> :Eva<CR>
+
+    "map F3 to make the font size small again
+    map <F3> :Papi<CR>
+
+    "map F5 to toggle Gundo
+    map <F5> :GundoToggle<CR>
+
+    "map F6 to toggle the Nerd tree
+    map <F6> :NERDTreeToggle<CR>
+    "map ctrl-F6 to go to the topmost/leftmost window
+    map <C-F6> :wincmd t<CR>
+
+    "map F7 to toggle the Tagbar
+    map <F7> :TagbarToggle<CR>
+
+    "map F8 to sniff the current file
+    map <F8> :call SniffFile()<CR>
+
+    "map C-F8 to trigger make
+    map <C-F8> :make<CR>
+
+    "map F9 to open buffer explorer
+    map <F9> :BufExplorer<CR>
+
+    "map C-F9 to open buffer list
+    map <C-F9> :buffers<CR>:b
+
+    "map F10 to close the current window
+    map <F10> :clo<CR>
+
+    "map F11 to toggle showing hidden chars
+    map <F11> :set list!<CR>:set list?<CR>
+
+    "map Ctrl F11 to start debugger
+    map <C-F11> :LaunchDebugger<CR>
+
+    "map C-F12 to toggle Conque shell
+    map <C-F12> :ConqueTermSplit bash<CR><ESC>:resize 5<CR>a
+    "map F12 to go to bottom window and insert mode (for Conque)
+    map <F12> :wincmd b<CR>a
+
+    "make gb go to the next buffer
+    nmap gb :bnext<CR>
+
+    "make gr go to previous tab
+    nmap gr :tabprev<CR>
+
+    "keep the text highlighted when tab-shifting
+    vnoremap < <gv
+    vnoremap > >gv
+
+    "map <leader>5 to Clean up file
+    map <silent> <leader>5 m`:call Cleanup()<CR>``zz
+
+    "map <leader>8 to highlight chars past 80th col
+    map <silent> <leader>8 :match OverLength /\%81v.*/<CR>
+    "map <leader>7 to turn off highlighting chars past 80th col
+    map <silent> <leader>7 :match none<CR>
+
+    " Column scroll-binding on <leader>sb
+    noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
+"
+
+" Plugin Settings
+    "let treeExplVertical=1   "set variable so the TreeExplorer will be vertical split
+
+    "fuzzyfinderTextmate
+    "nmap \f :FuzzyFinderFile<CR>
+    "nmap \b :FuzzyFinderBuffer<CR>
+    "nmap \c :FuzzyFinderMruCmd<CR>
+
+    " Settings for PHPDoc blocks
+    let g:pdv_cfg_Author = "Jansen Price <jansen.price@nerdery.com>"
+    let g:pdv_cfg_Copyright = "2010 Quantal Ideas"
+    "inoremap <C-P> <ESC>:call PhpDocSingle()<CR>i
+    nnoremap <C-P> :call PhpDocSingle()<CR>
+    vnoremap <C-P> :call PhpDocRange()<CR>
+
+    " Set notes dir for vim-pad
+    let g:pad_dir = "~/Documents/notes/"
+"
+
+" Functions
+    " Removes trailing spaces
+    function! TrimWhiteSpace()
+        %s/\s*$//e
+    :endfunction
+
+    " Removes trailing spaces
+    function! TabsToSpaces()
+        %s/\t/    /ge
+    :endfunction
+
+    " Remove \r characters
+    function! RemoveCarriageReturns()
+        %s/\r//ge
+    :endfunction
+
+    " Remove multiblank lines
+    function! RemoveMultiblankLines()
+        g/^\s*\n$/d
+    :endfunction
+
+    function! Cleanup()
+        set fileformat=unix
+        set expandtab
+        call TrimWhiteSpace()
+        call TabsToSpaces()
+        call RemoveMultiblankLines()
+        call RemoveCarriageReturns()
+        echomsg "File Cleaned Up."
+    :endfunction
+
+    " Fix some php styles (Zend standard)
+    function! FixStyles()
+        call FixControlStructureSpacing()
+        " Put the opening brace of a function on a new line
+        %s/\(public \|private \|protected \|\)\(static \|\)\s*function \(.*\))\s*{/\1\2function \3)\r    {/e
+    :endfunction
+
+    " Fix php styles (Apricot standard)
+    function! FixStylesApricot()
+        call FixControlStructureSpacing()
+        " Put the opening brace of a function on the same line
+        %s/\(public \|private \|protected \|\)\(static \|\)\s*function \(.*\))\s*{/\1\2function \3) {/e
+    :endfunction
+
+    function! FixControlStructureSpacing()
+        " Fix spacing in if, for, foreach lines
+        %s/\(if\|foreach\|for\)\s*(\(.*\))\s*\n\?\s*{/\1 (\2) {/e
+
+        " Fix spacing in else lines
+        %s/}\s*\n*\s*else\s*\n*\s*{/} else {/e
+
+        " Fix spacing in elseif lines
+        %s/}\s*\n*\s*elseif\s*(\(.*\))\s*\n\?\s*{/} elseif (\1) {/e
+    :endfunction
+
+    " Set Sniff Standard
+    let g:SniffStandard = 'Apricot'
+
+    " Check box
+    function! s:CheckBox()
+        :normal mxF[lrX`x
+    :endfunction
+    command! Checkbox call s:CheckBox()
+    nmap <C-Space> :Checkbox<CR>
+
+    " uncheck box
+    function! s:UncheckBox()
+        :normal mxF[lr `x
+    :endfunction
+    command! Uncheckbox call s:UncheckBox()
+
+    " Set environment for a child
+    function! s:Eva()
+        if has('win32')
+            set guifont=Envy_Code_R:h50:cANSI
+        else
+            set guifont=Envy\ Code\ R\ 50
+        endif
+        set nonumber
+        set laststatus=0 " Don't show the status line
+    :endfunction
+    command! Eva call s:Eva()
+
+    " Set environment for an adult
+    function! s:Papi()
+        if has('win32')
+            set guifont=Envy_Code_R:h11:cANSI
+        else
+            set guifont=Envy\ Code\ R\ 10
+        endif
+        set number
+        set laststatus=2 " Always show the status line
+    :endfunction
+    command! Papi call s:Papi()
+
+    " Function to launch the PHP debugger environment
+    function! s:LaunchDebugger()
+        source ~/.vim/dbg_plugin/debugger.vim
+        map <C-F11> :source ~/.vimrc<CR>:echomsg "Debugger Environment Disabled."<CR>
+        echomsg "Debugger environment enabled. Press F5 to launch."
+    :endfunction
+    command! LaunchDebugger call s:LaunchDebugger()
+
+    "Show the Subversion 'blame' annotation for the current file, in a narrow
+    "  window to the left of it.
+    "Usage:
+    "  'gb' or ':Blame'
+    "  To get rid of it, close or delete the annotation buffer.
+    "Bugs:
+    "  If the source file buffer has unsaved changes, these aren't noticed and
+    "    the annotations won't align properly. Should either warn or preferably
+    "    annotate the actual buffer contents rather than the last saved version.
+    "  When annotating the same source file again, it creates a new annotation
+    "    buffer. It should re-use the existing one if it still exists.
+    "Possible_Enhancements:
+    "  When invoked on a revnum in a Blame window, re-blame same file up to the
+    "    previous revision.
+    "  Dynamically synchronize when edits are made to the source file.
+    function! s:svnBlame()
+       let line = line(".")
+       setlocal nowrap
+       " create a new window at the left-hand side
+       aboveleft 18vnew
+       " blame, ignoring white space changes
+       %!svn blame -x-w "#"
+       setlocal nomodified readonly buftype=nofile nowrap winwidth=1
+       setlocal nonumber
+       if has('&relativenumber') | setlocal norelativenumber | endif
+       " return to original line
+       exec "normal " . line . "G"
+       " synchronize scrolling, and return to original window
+       setlocal scrollbind
+       wincmd p
+       setlocal scrollbind
+       syncbind
+    :endfunction
+    map gb :call <SID>svnBlame()<CR>
+    command! Blame call s:svnBlame()
+
+    " Replace special chars like smart quotes and endashes
+    function! s:ReplaceSpecialChars()
+        %s/“/``/g
+        %s/”/''/g
+        %s/’/'/g
+        %s/–/--/g " en-dash
+        %s/—/---/g " em-dash
+    :endfunction
+    command! ReplaceSpecialChars call s:ReplaceSpecialChars()
+"
