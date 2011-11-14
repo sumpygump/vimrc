@@ -10,9 +10,6 @@
 [submodule "vim/bundle/nerdtree"]
 	path = vim/bundle/nerdtree
 	url = git://github.com/scrooloose/nerdtree.git
-[submodule "vim/bundle/bufexplorer"]
-	path = vim/bundle/bufexplorer
-	url = git://github.com/markabe/bufexplorer.git
 [submodule "vim/bundle/compview"]
 	path = vim/bundle/compview
 	url = git://github.com/vim-scripts/compview.git
@@ -22,3 +19,6 @@
 [submodule "vim/bundle/supertab"]
 	path = vim/bundle/supertab
 	url = git://github.com/ervandew/supertab.git
+[submodule "vim/bundle/bufexplorer"]
+	path = vim/bundle/bufexplorer
+	url = git://github.com/markabe/bufexplorer.git
