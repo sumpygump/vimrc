@@ -1,11 +1,18 @@
+" ============================================================================
+" File:        svndiff.vim
+" Description: Vim plugin for the `svn diff' command
+" Maintainer:  Jansen Price <jansen.price at gmail dot com>
+" Last Change: 2011-11-15
+" License:     http://www.opensource.org/licenses/mit-license.php MIT
+" Usage:       Run SvnDiff (revision number) to open a pane to the left with a
+"              diff of the current file and that revision
+" ============================================================================
 if exists("loaded_svndiff") || &compatible
     finish
 endif
 let loaded_svndiff = 1
 
-command! -nargs=? SVNDiff :call s:Svndiff(<f-args>)
-
-function! s:Svndiff(...)
+function! s:SvnDiff(...)
     if a:0 > 0
         let rev = a:1
     else
@@ -30,5 +37,6 @@ function! s:Svndiff(...)
     exe "set filetype=" . ftype
     set foldmethod=diff
     wincmd l
+:endfunction
 
-endfunction
+command! -nargs=? SvnDiff :call s:SvnDiff(<f-args>)
