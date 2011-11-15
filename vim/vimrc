@@ -137,8 +137,8 @@
     "map F7 to toggle the Tagbar
     map <F7> :TagbarToggle<CR>
 
-    "map F8 to sniff the current file
-    map <F8> :call SniffFile()<CR>
+    "map F8 to view
+    map <F8> :MarksBrowser<CR>
 
     "map C-F8 to trigger make
     map <C-F8> :make<CR>
@@ -191,29 +191,33 @@
     vnoremap <C-P> :call PhpDocRange()<CR>
 
     " Set notes dir for vim-pad
-    let g:pad_dir = "~/Documents/notes/"
+    let g:pad_dir = "~/.vim/tmp/notes/"
+
+    " Settings for showmarks
+    let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ.'`^<>[]{}()\""
+    let g:showmarks_ignore_type = "hqm"
 "
 
 " Functions
     " Removes trailing spaces
     function! TrimWhiteSpace()
         %s/\s*$//e
-    :endfunction
+    endfunction
 
     " Removes trailing spaces
     function! TabsToSpaces()
         %s/\t/    /ge
-    :endfunction
+    endfunction
 
     " Remove \r characters
     function! RemoveCarriageReturns()
         %s/\r//ge
-    :endfunction
+    endfunction
 
     " Remove multiblank lines
     function! RemoveMultiblankLines()
         g/^\s*\n$/d
-    :endfunction
+    endfunction
 
     function! Cleanup()
         set fileformat=unix
@@ -223,14 +227,14 @@
         call RemoveMultiblankLines()
         call RemoveCarriageReturns()
         echomsg "File Cleaned Up."
-    :endfunction
+    endfunction
 
     " Fix some php styles (Zend standard)
     function! FixStyles()
         call FixControlStructureSpacing()
         " Put the opening brace of a function on a new line
         %s/\(public \|private \|protected \|\)\(static \|\)\s*function \(.*\))\s*{/\1\2function \3)\r    {/e
-    :endfunction
+    endfunction
 
     function! FixControlStructureSpacing()
         " Fix spacing in if, for, foreach lines
@@ -241,19 +245,19 @@
 
         " Fix spacing in elseif lines
         %s/}\s*\n*\s*elseif\s*(\(.*\))\s*\n\?\s*{/} elseif (\1) {/e
-    :endfunction
+    endfunction
 
     " Check box
     function! s:CheckBox()
-        :normal mxF[lrX`x
-    :endfunction
+        normal mxF[lrX`x
+    endfunction
     command! Checkbox call s:CheckBox()
     nmap <C-Space> :Checkbox<CR>
 
     " Uncheck box
     function! s:UncheckBox()
-        :normal mxF[lr `x
-    :endfunction
+        normal mxF[lr `x
+    endfunction
     command! Uncheckbox call s:UncheckBox()
 
     " Set environment for a child
@@ -265,7 +269,7 @@
         endif
         set nonumber
         set laststatus=0 " Don't show the status line
-    :endfunction
+    endfunction
     command! Eva call s:Eva()
 
     " Set environment for an adult
@@ -277,7 +281,7 @@
         endif
         set number
         set laststatus=2 " Always show the status line
-    :endfunction
+    endfunction
     command! Papi call s:Papi()
 
     " Replace special chars like smart quotes and endashes
@@ -287,7 +291,7 @@
         %s/’/'/g
         %s/–/--/g " en-dash
         %s/—/---/g " em-dash
-    :endfunction
+    endfunction
     command! ReplaceSpecialChars call s:ReplaceSpecialChars()
 "
 
