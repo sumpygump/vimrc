@@ -2,12 +2,12 @@
 " File:        qis.vim
 " Description: Vim plugin for QIS (Quantal Integration System)
 " Maintainer:  Jansen Price <jansen.price at gmail dot com>
-" Last Change: 2011-03-25
+" Last Change: 2011-11-15
 " License:     http://www.opensource.org/licenses/mit-license.php MIT
 " Usage:       Run qis command to see the code coverage
 "              reports and analysis files
 " ============================================================================
-let s:Version = '1.0.8'
+let s:Version = '1.0.9'
 
 " Storage for the appended number to keep the buffer names unique
 let s:nextBufferNumber = 1
@@ -188,6 +188,13 @@ command! QisCs call QisCs()
 
 function! s:GetCsIndex()
     silent exec "%!qis cs --list"
+    if v:shell_error == '1'
+        normal G
+        exec "normal oReturn code:" . v:shell_error
+        r ! pwd
+        exec "normal ICurrent path: "
+        exec "normal oYou need to change your current working directory to the project root or else run qis init"
+    endif
     normal 1G
 
     " Go to the line number we were at last time we ran the cs report
@@ -196,18 +203,42 @@ function! s:GetCsIndex()
 endfunction
 
 function! s:RunCs()
-    silent exec "%!qis cs -d"
+    call s:echo("Running codesniffer on project...")
+    silent exec "%!qis cs -q"
     normal 1G
+    call s:echo("Running codesniffer on project...DONE")
 
-    call s:bindCsMappings()
+    call s:GetCsIndex()
+endfunction
+
+function! s:RunCsSingle()
+    " Find the filename for which to run the sniff
+    let s:filename = matchstr(getline('.'), '^\f\+')
+    echomsg s:filename
+    if s:filename != ''
+        silent exec "%!qis cs -q " . s:filename
+        call s:GetCsIndex()
+    endif
 endfunction
 
 function! s:bindCsIndexMappings()
     nnoremap <silent> <buffer> <CR> :call <SID>openCsFile()<CR>
-    nnoremap <silent> <buffer> t :call <SID>RunCs()<CR>
-    nnoremap <silent> <buffer> T :call <SID>RunCsSingle()<CR>
+    nnoremap <silent> <buffer> s :call <SID>RunCs()<CR>
+    nnoremap <silent> <buffer> S :call <SID>RunCsSingle()<CR>
     nnoremap <silent> <buffer> r :call <SID>GetCsIndex()<CR>
     nnoremap <silent> <buffer> q :close<CR>
+
+    let line = line(".")
+
+    normal Go
+    normal oPress enter to view sniff report for file on current line
+    normal oPress s to re-run sniff
+    normal oPress S to re-run sniff only for file on the current line
+    normal oPress r to refresh this window
+    normal oPress q to exit this window
+
+    " return to original line
+    exec "normal " . line . "G"
 endfunction
 
 function! s:bindCsFileMappings()
@@ -215,6 +246,17 @@ function! s:bindCsFileMappings()
     nnoremap <silent> <buffer> t :call <SID>GetCsIndex()<CR>
     nnoremap <silent> <buffer> r :call <SID>performSniff()<CR>
     nnoremap <silent> <buffer> q :close<CR>
+
+    let line = line(".")
+
+    normal Go
+    normal oPress enter to go to line number specified
+    normal oPress t to return to sniff index
+    normal oPress r to refresh this sniff
+    normal oPress q to exit this window
+
+    " return to original line
+    exec "normal " . line . "G"
 endfunction
 
 function! s:openCsFile()
@@ -239,8 +281,11 @@ function! s:openCsFile()
 endfunction
 
 function! s:performSniff()
+    call s:echo("Running codesniffer on file " . t:activeCsFile . "...")
     silent exec "%!qis cs --quiet " . t:activeCsFile
     normal 8G
+    call s:echo("Running codesniffer on file " . t:activeCsFile . "...DONE")
+    call s:bindCsFileMappings()
 endfunction
 
 " Find the line number in the error report for the cursor's current line
@@ -300,3 +345,8 @@ function! s:nextCsBufferName()
     return name
 endfunction
 " }}}
+
+function! s:echo(msg)
+    redraw
+    echomsg "Qis: " . a:msg
+endfunction
