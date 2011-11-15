@@ -186,16 +186,6 @@
 "
 
 " Plugin Settings
-    "let treeExplVertical=1   "set variable so the TreeExplorer will be vertical split
-
-    "fuzzyfinderTextmate
-    "nmap \f :FuzzyFinderFile<CR>
-    "nmap \b :FuzzyFinderBuffer<CR>
-    "nmap \c :FuzzyFinderMruCmd<CR>
-
-    " Settings for PHPDoc blocks
-    let g:pdv_cfg_Author = "Jansen Price <jansen.price@nerdery.com>"
-    let g:pdv_cfg_Copyright = "2010 Quantal Ideas"
     "inoremap <C-P> <ESC>:call PhpDocSingle()<CR>i
     nnoremap <C-P> :call PhpDocSingle()<CR>
     vnoremap <C-P> :call PhpDocRange()<CR>
@@ -253,9 +243,6 @@
         %s/}\s*\n*\s*elseif\s*(\(.*\))\s*\n\?\s*{/} elseif (\1) {/e
     :endfunction
 
-    " Set Sniff Standard
-    let g:SniffStandard = 'Apricot'
-
     " Check box
     function! s:CheckBox()
         :normal mxF[lrX`x
@@ -263,7 +250,7 @@
     command! Checkbox call s:CheckBox()
     nmap <C-Space> :Checkbox<CR>
 
-    " uncheck box
+    " Uncheck box
     function! s:UncheckBox()
         :normal mxF[lr `x
     :endfunction
@@ -303,3 +290,6 @@
     :endfunction
     command! ReplaceSpecialChars call s:ReplaceSpecialChars()
 "
+
+" Load any machine specific directives
+source ~/.vim/user.vim
