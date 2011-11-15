@@ -98,18 +98,15 @@
         au BufRead,BufNewFile *.php set errorformat=%m\ in\ %f\ on\ line\ %l
 
         " Set dictionary for PHP
+        " TODO Need better solution for php dict or else remove
         au BufRead,BufNewFile *.php set dictionary=~/.vim/dict/php
     "
 
     " epub
     au BufReadCmd   *.epub      call zip#Browse(expand("<amatch>"))
 
+    " Used for highlighting lines more than 80 characters long
     highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-    "match OverLength /\%81v.*/
-
-    if (has("autocmd"))
-        "autocmd bufwritepost .vimrc source $MYVIMRC
-    endif
 "
 
 " Mappings
@@ -302,14 +299,6 @@
         set laststatus=2 " Always show the status line
     :endfunction
     command! Papi call s:Papi()
-
-    " Function to launch the PHP debugger environment
-    function! s:LaunchDebugger()
-        source ~/.vim/dbg_plugin/debugger.vim
-        map <C-F11> :source ~/.vimrc<CR>:echomsg "Debugger Environment Disabled."<CR>
-        echomsg "Debugger environment enabled. Press F5 to launch."
-    :endfunction
-    command! LaunchDebugger call s:LaunchDebugger()
 
     "Show the Subversion 'blame' annotation for the current file, in a narrow
     "  window to the left of it.
