@@ -296,4 +296,6 @@
 "
 
 " Load any machine specific directives
-source ~/.vim/user.vim
+if filereadable($HOME . "/.vim/user.vim")
+    source $HOME/.vim/user.vim
+endif
