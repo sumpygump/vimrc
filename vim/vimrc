@@ -190,9 +190,6 @@
     nnoremap <C-P> :call PhpDocSingle()<CR>
     vnoremap <C-P> :call PhpDocRange()<CR>
 
-    " Set notes dir for vim-pad
-    let g:pad_dir = "~/.vim/tmp/notes/"
-
     " Settings for showmarks
     let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ.'`^<>[]{}()\""
     let g:showmarks_ignore_type = "hqm"
