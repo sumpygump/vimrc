@@ -28,3 +28,6 @@
 [submodule "vim/bundle/conque"]
 	path = vim/bundle/conque
 	url = git://github.com/rson/vim-conque.git
+[submodule "vim/bundle/hjkl"]
+	path = vim/bundle/hjkl
+	url = git://github.com/vim-scripts/HJKL.git
