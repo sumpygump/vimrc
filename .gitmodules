@@ -25,3 +25,6 @@
 [submodule "vim/bundle/debugger"]
 	path = vim/bundle/debugger
 	url = git://github.com/sumpygump/vim-php-debugger.git
+[submodule "vim/bundle/conque"]
+	path = vim/bundle/conque
+	url = git://github.com/rson/vim-conque.git
