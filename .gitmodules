@@ -31,3 +31,6 @@
 [submodule "vim/bundle/hjkl"]
 	path = vim/bundle/hjkl
 	url = git://github.com/vim-scripts/HJKL.git
+[submodule "vim/bundle/php-documentor"]
+	path = vim/bundle/php-documentor
+	url = git://github.com/sumpygump/php-documentor-vim.git

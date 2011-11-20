@@ -96,6 +96,8 @@
         " Set make program
         au BufRead,BufNewFile *.php set makeprg=php\ -l\ %
         au BufRead,BufNewFile *.php set errorformat=%m\ in\ %f\ on\ line\ %l
+        au BufRead,BufNewFile *.php nnoremap <buffer> <C-P> :call PhpDoc()<CR>
+        au BufRead,BufNewFile *.php vnoremap <buffer> <C-P> :call PhpDocRange()<CR>
 
         " Set dictionary for PHP
         " TODO Need better solution for php dict or else remove
@@ -187,8 +189,8 @@
 
 " Plugin Settings
     "inoremap <C-P> <ESC>:call PhpDocSingle()<CR>i
-    nnoremap <C-P> :call PhpDocSingle()<CR>
-    vnoremap <C-P> :call PhpDocRange()<CR>
+    "nnoremap <C-P> :call PhpDoc()<CR>
+    "vnoremap <C-P> :call PhpDocRange()<CR>
 
     " Settings for showmarks
     let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ.'`^<>[]{}()\""
