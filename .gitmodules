@@ -34,3 +34,6 @@
 [submodule "vim/bundle/php-documentor"]
 	path = vim/bundle/php-documentor
 	url = git://github.com/sumpygump/php-documentor-vim.git
+[submodule "vim/bundle/syntastic"]
+	path = vim/bundle/syntastic
+	url = git://github.com/scrooloose/syntastic.git
