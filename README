@@ -1,3 +1,7 @@
+Auto Install:
+wget -O - https://github.com/sumpygump/vimrc/raw/master/autoinstall.sh | sh
+
+Manual Install:
 cd ~
 git clone git://github.com/sumpygump/vimrc.git
 cd vimrc
