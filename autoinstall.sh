@@ -24,7 +24,7 @@ git submodule update
 
 # Symlink ~/.vim and ~/.vimrc
 cd ~
-ln -s "$INSTALL_TO/vimrc/vimrc" .vimrc
+ln -s "$INSTALL_TO/vimrc/vim/vimrc" .vimrc
 ln -s "$INSTALL_TO/vimrc/vim" .vim
 touch ~/.vim/user.vim
 
