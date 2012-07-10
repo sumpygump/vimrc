@@ -175,6 +175,10 @@
     vnoremap < <gv
     vnoremap > >gv
 
+    " Prevent error messages when mistyping :w and :q
+    command W w
+    command Q q
+
     "map <leader>5 to Clean up file
     map <silent> <leader>5 m`:call Cleanup()<CR>``zz
 
@@ -195,6 +199,11 @@
     " Settings for showmarks
     let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ.'`^<>[]{}()\""
     let g:showmarks_ignore_type = "hqm"
+
+    " Settings for syntastic
+    let g:syntastic_mode_map = { 'mode': 'active',
+                               \ 'active_filetypes': ['python', 'php'],
+                               \ 'passive_filetypes': [] }
 "
 
 " Functions
@@ -262,9 +271,9 @@
     " Set environment for a child
     function! s:Eva()
         if has('win32')
-            set guifont=Envy_Code_R:h50:cANSI
+            set guifont=Envy_Code_R:h25:cANSI
         else
-            set guifont=Envy\ Code\ R\ 50
+            set guifont=Envy\ Code\ R\ 25 
         endif
         set nonumber
         set laststatus=0 " Don't show the status line

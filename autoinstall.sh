@@ -28,4 +28,7 @@ ln -s "$INSTALL_TO/vimrc/vim/vimrc" .vimrc
 ln -s "$INSTALL_TO/vimrc/vim" .vim
 touch ~/.vim/user.vim
 
+echo "You should run this:"
+echo "sudo apt-get install exuberant-ctags"
+
 echo "Installed and configured .vim, have fun."
