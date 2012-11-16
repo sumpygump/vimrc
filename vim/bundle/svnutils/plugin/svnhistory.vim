@@ -17,7 +17,7 @@ function! s:SvnHistory(...)
     if a:0 > 0
         let startrev = a:1
     else
-        let startrev = 'BASE'
+        let startrev = '1'
     endif
 
     if a:0 > 1
@@ -27,7 +27,7 @@ function! s:SvnHistory(...)
     endif
 
     aboveleft vertical new
-    let cmd = "svn log -r " . startrev . ":" . endrev
+    let cmd = "svn log -v -r" . startrev . ":" . endrev
 
     echom cmd
     silent exec "%!" . cmd
@@ -48,9 +48,57 @@ function! s:openDiff()
     let s:revision = matchstr(getline('.'), '^r[0-9]*')
     let s:revision = strpart(s:revision, 1)
     let s:prevrev = (str2nr(s:revision)) - 1
+
     wincmd l
+    exec "edit " . s:prevrev . ":" . s:revision
+
+    " Setup as a throw away buffer
+    setlocal noswapfile
+    setlocal buftype=nofile
+    setlocal bufhidden=hide
+    set readonly
+
     let cmd = "svn diff -r" . s:prevrev . ":" . s:revision
     echom cmd
     silent exec "%!" . cmd
+
+    setlocal ft=diff
+endfunction
+
+" This is a different way of doing it. You have a svn log file open and it
+" allows you to press enter on the lines with rXXX and it will open the diff in
+" a window below
+command! EnableSvnLogDiff :call s:enableSvnLogDiff()
+
+function! s:enableSvnLogDiff()
+    belowright new
+    wincmd k
+    call s:bindBelowMappings()
+endfunction
+
+function! s:bindBelowMappings()
+    nnoremap <silent> <buffer> <CR> :call <SID>openBelowDiff()<CR>
+endfunction
+
+function! s:openBelowDiff()
+    let t:logLineNumber = line('.')
+    let s:revision = matchstr(getline('.'), '^r[0-9]*')
+    let s:revision = strpart(s:revision, 1)
+    let s:prevrev = (str2nr(s:revision)) - 1
+
+    wincmd j
+    exec "edit " . s:prevrev . ":" . s:revision
+
+    " Setup as a throw away buffer
+    setlocal noswapfile
+    setlocal buftype=nofile
+    setlocal bufhidden=hide
+    set readonly
+
+    " Suppress stderr to clean up error message output prior to the diff
+    let cmd = "svn diff -r" . s:prevrev . ":" . s:revision . " 2>/dev/null"
+    "echom cmd
+    silent exec "silent %!" . cmd
+
     setlocal ft=diff
 endfunction
