@@ -204,6 +204,7 @@
     let g:syntastic_mode_map = { 'mode': 'active',
                                \ 'active_filetypes': ['python', 'php'],
                                \ 'passive_filetypes': [] }
+    let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 "
 
 " Functions
