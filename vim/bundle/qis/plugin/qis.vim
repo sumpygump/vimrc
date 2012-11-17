@@ -86,7 +86,7 @@ function! s:printCoverageIndexHelp()
     normal oPress t to re-run tests
     normal oPress T to re-run tests for the file on the current line
     normal oPress r to refresh this window
-    normal oPress o to open the test file on the current line
+    normal oPress O to open the test file on the current line
     normal oPress q to close this window
 
     " return to original line
