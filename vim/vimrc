@@ -205,6 +205,7 @@
                                \ 'active_filetypes': ['python', 'php'],
                                \ 'passive_filetypes': [] }
     let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+    let g:syntastic_cpp_compiler_options = ' -std=c++11'
 "
 
 " Functions
