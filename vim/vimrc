@@ -197,7 +197,7 @@
     "vnoremap <C-P> :call PhpDocRange()<CR>
 
     " Settings for showmarks
-    let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ.'`^<>[]{}()\""
+    let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ"
     let g:showmarks_ignore_type = "hqm"
 
     " Settings for syntastic
