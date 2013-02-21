@@ -201,7 +201,7 @@
     let g:showmarks_ignore_type = "hqm"
 
     " Settings for syntastic
-    let g:syntastic_mode_map = { 'mode': 'active',
+    let g:syntastic_mode_map = { 'mode': 'passive',
                                \ 'active_filetypes': ['python', 'php'],
                                \ 'passive_filetypes': [] }
     let g:ackprg="ack-grep -H --nocolor --nogroup --column"
