@@ -381,7 +381,6 @@ command! EnableSyntastic call s:EnableSyntastic()
 
 " Load any machine specific directives {{{1
 " -----------------------------------
->>>>>>> develop
 if filereadable($HOME . "/.vim/user.vim")
     source $HOME/.vim/user.vim
 endif
