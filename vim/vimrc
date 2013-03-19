@@ -72,7 +72,7 @@
     set smartcase " Use smart case searching
     set statusline=[%n]\ %f\ %m%r%h%w%=[%{&ff}]\ [ai\ %{&ai}]\ [et\ %{&et}]\ [%l,%v]\ [%LL][%p%%]
     set ttyfast " Fast terminal for smoother redrawing
-    set synmaxcol=512 " Only apply syntax coloring for lines up to 512 chars
+    set synmaxcol=1024 " Only apply syntax coloring for lines up to x chars
 "
 
 " Text Formatting/Layout
@@ -303,6 +303,19 @@
         %s/—/---/g " em-dash
     endfunction
     command! ReplaceSpecialChars call s:ReplaceSpecialChars()
+
+    function! s:DisableSyntastic()
+        let g:syntastic_mode_map_backup = g:syntastic_mode_map
+        let g:syntastic_mode_map = { 'mode': 'passive',
+                                   \ 'active_filetypes': [],
+                                   \ 'passive_filetypes': [] }
+    endfunction
+    command! DisableSyntastic call s:DisableSyntastic()
+
+    function! s:EnableSyntastic()
+        let g:syntastic_mode_map = g:syntastic_mode_map_backup
+    endfunction
+    command! EnableSyntastic call s:EnableSyntastic()
 "
 
 " Load any machine specific directives
