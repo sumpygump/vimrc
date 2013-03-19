@@ -1,311 +1,371 @@
 " Vimrc for Jansen Price <jansen.price@gmail.com>
 
-" Basics
-    call pathogen#infect()
-    set nocompatible " Disable vi-compatible mode
-    set background=dark
-"
+" Options {{{1
 
-" GUI Settings
-    if has('gui_running')
-        " Set colorscheme
-        colorscheme tango
+" 1 important {{{2
+" -----------------------------------
+set nocompatible " Disable vi-compatible mode
 
-        "size of window
-        set columns=84
-        set lines=46
+" 2 moving around, searching and patterns {{{2
+" -----------------------------------
+"set autochdir " Always switch to the current file directory
+set incsearch " Incremental search
+set smartcase " Use smart case searching
 
-        set guioptions-=T
-        set guioptions-=m
-        set guioptions-=M
-        set guioptions+=r
-        set guioptions+=l
+" 3 tags {{{2
+" -----------------------------------
 
-        if has('win32')
-            set guifont=Envy_Code_R:h10:cANSI
-        else
-            set guifont=Envy\ Code\ R\ 10
-        endif
+" 4 displaying text {{{2
+" -----------------------------------
+set scrolloff=2 " Keep 2 lines on top and bottom
+set wrap " Long lines wrap
+set showbreak=↪ " String to put before wrapped screen lines
+set lazyredraw " Do not redraw while running macros
+set list " Show whitespace characters
+"set listchars=eol:#,tab:>-,trail:# " Whitespace characters
+set listchars=tab:>- " Whitespace characters
+set number " Show line numbers
 
-        "maximize (windows only)
-        if has('win32')
-            au GUIEnter * simalt ~x
-        endif
+" 5 syntax, highlighting and spelling {{{2
+" -----------------------------------
+syntax on
+filetype plugin indent on " load filetype plugins/indent settings
+set background=dark
+set synmaxcol=1024 " Only apply syntax coloring for lines up to x chars
+set hlsearch " Highlight search matches
+
+" 6 multiple windows {{{2
+" -----------------------------------
+set laststatus=2 " Always show status line
+set statusline=[%n]\ %f\ %m%r%h%w%=[%{&ff}]\ [ai\ %{&ai}]\ [et\ %{&et}]\ [%l,%v]\ [%LL][%p%%]
+"set hidden " Hide buffers when they are abandoned
+
+" 7 multiple tab pages {{{2
+" -----------------------------------
+set showtabline=2 " Always show the tabline (helpful for window size)
+
+" 8 terminal {{{2
+" -----------------------------------
+set ttyfast " Fast terminal for smoother redrawing
+
+" 9 using the mouse {{{2
+" -----------------------------------
+set mouse=a " Enable mouse usage (all modes) in terminals
+
+" 10 GUI {{{2
+" -----------------------------------
+colorscheme tango " Set colorscheme
+
+if has('gui_running')
+    " Set size of window
+    set columns=84
+    set lines=46
+
+    set guioptions-=T
+    set guioptions-=m
+    set guioptions-=M
+    set guioptions+=r
+    set guioptions+=l
+
+    if has('win32')
+        set guifont=Envy_Code_R:h10:cANSI
     else
-        " Set colorscheme
-        colorscheme tango
+        set guifont=Envy\ Code\ R\ 10
     endif
-"
 
-" General
-    syntax on
-    filetype plugin indent on " load filetype plugins/indent settings
-    "set autochdir " always switch to the current file directory
-    set autowrite " Automatically save before commands like :next and :make
-    set backspace=indent,eol,start " more powerful backspacing
-    set directory=~/.vim/tmp " Set directory for swap files
-    set fileformats=unix,dos " Support for fileformats
-    "set hidden " Hide buffers when they are abandoned
-    set mouse=a " Enable mouse usage (all modes) in terminals
-    set nobackup " Don't make backup files
-    set noerrorbells " Don't beep for error messages
-    set novisualbell " No visual bell
-    set showcmd " Show (partial) command in status line
-    "set vb t_vb= " No beeps or flash
-    set wildmenu " Use enhanced mode of command-line completion
-    set encoding=utf-8 " Set utf-8 encoding
-"
+    " Maximize (Windows only)
+    if has('win32')
+        au GUIEnter * simalt ~x
+    endif
+endif
 
-" Vim UI Settings
-    set hlsearch " Highlight search
-    set incsearch " Incremental search
-    set laststatus=2 " Always show status line
-    set lazyredraw " Do not redraw while running macros
-    "set listchars=eol:#,tab:>-,trail:# " Whitespace characters
-    set listchars=tab:>- " Whitespace characters
-    set list " Show whitespace characters
-    set number " Show line numbers
-    set ruler " Show the line and col number of the cursor position
-    set scrolloff=2 " Keep 2 lines on top and bottom
-    set showmatch " Show matching brackets.
-    set showtabline=2 " Always show the tabline (helpful for window size)
-    set smartcase " Use smart case searching
-    set statusline=[%n]\ %f\ %m%r%h%w%=[%{&ff}]\ [ai\ %{&ai}]\ [et\ %{&et}]\ [%l,%v]\ [%LL][%p%%]
-    set ttyfast " Fast terminal for smoother redrawing
-    set synmaxcol=512 " Only apply syntax coloring for lines up to 512 chars
-"
+" 11 printing {{{2
+" -----------------------------------
 
-" Text Formatting/Layout
-    set autoindent
-    set expandtab " Use spaces not tabs
-    set shiftwidth=4 " Number of spaces to use for indentation
-    set softtabstop=4 " How many spaces per tab
-    set tabstop=4 " Number of spaces that a tab counts
-    set wrap
-    set showbreak=↪
-    set textwidth=79 " Autmatically break long lines while typing
-"
+" 12 messages and info {{{2
+" -----------------------------------
+set showcmd " Show (partial) command in status line
+set ruler " Show the line and col number of the cursor position
+set noerrorbells " Don't beep for error messages
+set novisualbell " No visual bell
+"set vb t_vb= " No beeps or flash
 
-" Folding
-    set foldenable " Turn on folding
-    set foldmethod=marker " Fold using markers
-"
+" 13 selecting text {{{2
+" -----------------------------------
 
-" Autocommands
-    " PHP
-        " Set make program
-        au BufRead,BufNewFile *.php set makeprg=php\ -l\ %
-        au BufRead,BufNewFile *.php set errorformat=%m\ in\ %f\ on\ line\ %l
-        au BufRead,BufNewFile *.php nnoremap <buffer> <C-P> :call PhpDocSingle()<CR>
-        au BufRead,BufNewFile *.php vnoremap <buffer> <C-P> :call PhpDocRange()<CR>
+" 14 editing text {{{2
+" -----------------------------------
+set textwidth=79 " Autmatically break long lines while typing
+set backspace=indent,eol,start " more powerful backspacing
+set showmatch " Show matching brackets.
 
-        " Set dictionary for PHP
-        " TODO Need better solution for php dict or else remove
-        au BufRead,BufNewFile *.php set dictionary=~/.vim/dict/php
-    "
+" 15 tabs and indenting {{{2
+" -----------------------------------
+set tabstop=4 " Number of spaces that a tab counts
+set shiftwidth=4 " Number of spaces to use for auto-indent
+set softtabstop=4 " How many spaces per tab
+set expandtab " Expand <Tab> to spaces in Insert mode
+set autoindent " Automatically set the indent of a new line
 
-    " epub
-    au BufReadCmd   *.epub      call zip#Browse(expand("<amatch>"))
+" 16 folding {{{2
+" -----------------------------------
+set foldenable " Turn on folding
+set foldmethod=marker " Fold using markers
 
-    " Used for highlighting lines more than 80 characters long
-    highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-"
+" 17 diff mode {{{2
+" -----------------------------------
 
-" Mappings
-    "map F2 to toggle highlight search results
-    map <F2> :set hlsearch!<CR>:set hlsearch?<CR>
+" 18 mapping {{{2
+" -----------------------------------
 
-    "map C-F2 to toggle spell check mode
-    map <C-F2> :set spell!<CR>:set spell?<CR>
+" 19 reading and writing files {{{2
+" -----------------------------------
+set fileformats=unix,dos " Support for fileformats
+set nobackup " Don't make backup files
+set autowrite " Automatically save before commands like :next and :make
 
-    "map F3 and F4 to cycle through buffers
-    map <C-F3> :bprev<CR>
-    map <C-F4> :bnext<CR>
+" 20 the swap file {{{2
+" -----------------------------------
+set directory=~/.vim/tmp " Set directory for swap files
 
-    "map F4 to make the font size BIG
-    map <F4> :Eva<CR>
+" 21 command line editing {{{2
+" -----------------------------------
+set wildmenu " Use enhanced mode of command-line completion
 
-    "map F3 to make the font size small again
-    map <F3> :Papi<CR>
+" 22 executing external commands {{{2
+" -----------------------------------
 
-    "map F5 to toggle Gundo
-    map <F5> :GundoToggle<CR>
+" 23 running make and jumping to errors {{{2
+" -----------------------------------
 
-    "map F6 to toggle the Nerd tree
-    map <F6> :NERDTreeToggle<CR>
-    "map ctrl-F6 to go to the topmost/leftmost window
-    map <C-F6> :wincmd t<CR>
+" 24 language specific {{{2
+" -----------------------------------
 
-    "map F7 to toggle the Tagbar
-    map <F7> :TagbarToggle<CR>
+" 25 multi-byte characters {{{2
+" -----------------------------------
+set encoding=utf-8 " Set utf-8 encoding
 
-    "map F8 to view
-    map <F8> :MarksBrowser<CR>
+" 26 various {{{2
+" -----------------------------------
 
-    "map C-F8 to trigger make
-    map <C-F8> :make<CR>
+" Autocommands {{{1
+" -----------------------------------
 
-    "map F9 to open buffer explorer
-    map <F9> :BufExplorer<CR>
+" PHP
+au BufRead,BufNewFile *.php set makeprg=php\ -l\ %
+au BufRead,BufNewFile *.php set errorformat=%m\ in\ %f\ on\ line\ %l
+au BufRead,BufNewFile *.php nnoremap <buffer> <C-P> :call PhpDocSingle()<CR>
+au BufRead,BufNewFile *.php vnoremap <buffer> <C-P> :call PhpDocRange()<CR>
 
-    "map C-F9 to open buffer list
-    map <C-F9> :buffers<CR>:b
+" Set dictionary for PHP
+" TODO Need better solution for php dict or else remove
+au BufRead,BufNewFile *.php set dictionary=~/.vim/dict/php
 
-    "map F10 to close the current window
-    map <F10> :clo<CR>
+" epub
+au BufReadCmd   *.epub      call zip#Browse(expand("<amatch>"))
 
-    "map F11 to toggle showing hidden chars
-    map <F11> :set list!<CR>:set list?<CR>
+" Indent xml
+au FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
 
-    "map Ctrl F11 to start debugger
-    map <C-F11> :LaunchDebugger<CR>
+" Used for highlighting lines more than 80 characters long
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 
-    "map C-F12 to toggle Conque shell
-    map <C-F12> :ConqueTermSplit bash<CR><ESC>:resize 5<CR>a
-    "map F12 to go to bottom window and insert mode (for Conque)
-    map <F12> :wincmd b<CR>a
+" Mappings {{{1
+" -----------------------------------
 
-    "make gb go to the next buffer
-    nmap gb :bnext<CR>
+" Map F2 to toggle highlight search results
+map <F2> :set hlsearch!<CR>:set hlsearch?<CR>
 
-    "make gr go to previous tab
-    nmap gr :tabprev<CR>
+" Map Ctrl-F2 to toggle spell check mode
+map <C-F2> :set spell!<CR>:set spell?<CR>
 
-    "keep the text highlighted when tab-shifting
-    vnoremap < <gv
-    vnoremap > >gv
+" Map F3 to go to the previous buffer
+map <F3> :bprev<CR>
 
-    " Prevent error messages when mistyping :w and :q
-    command W w
-    command Q q
+" Map F4 to go to the next buffer
+map <F4> :bnext<CR>
 
-    "map <leader>5 to Clean up file
-    map <silent> <leader>5 m`:call Cleanup()<CR>``zz
+" Map F5 to toggle Gundo
+map <F5> :GundoToggle<CR>
 
-    "map <leader>8 to highlight chars past 80th col
-    map <silent> <leader>8 :match OverLength /\%81v.*/<CR>
-    "map <leader>7 to turn off highlighting chars past 80th col
-    map <silent> <leader>7 :match none<CR>
+" Map F6 to toggle the Nerd tree
+map <F6> :NERDTreeToggle<CR>
+" Map ctrl-F6 to go to the topmost/leftmost window
+map <C-F6> :wincmd t<CR>
 
-    " Column scroll-binding on <leader>sb
-    noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
-"
+" Map F7 to toggle the Tagbar
+map <F7> :TagbarToggle<CR>
 
-" Plugin Settings
-    "inoremap <C-P> <ESC>:call PhpDocSingle()<CR>i
-    "nnoremap <C-P> :call PhpDoc()<CR>
-    "vnoremap <C-P> :call PhpDocRange()<CR>
+" Map F8 to view
+map <F8> :MarksBrowser<CR>
 
-    " Settings for showmarks
-    let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ"
-    let g:showmarks_ignore_type = "hqm"
+" Map Ctrl-F8 to trigger make
+map <C-F8> :make<CR>
 
-    " Settings for syntastic
-    let g:syntastic_mode_map = { 'mode': 'passive',
-                               \ 'active_filetypes': ['python', 'php'],
-                               \ 'passive_filetypes': [] }
-    let g:ackprg="ack-grep -H --nocolor --nogroup --column"
-    let g:syntastic_cpp_compiler_options = ' -std=c++11'
-"
+" Map F9 to open buffer explorer
+map <F9> :BufExplorer<CR>
 
-" Functions
-    " Removes trailing spaces
-    function! TrimWhiteSpace()
-        %s/\s*$//e
-    endfunction
+" Map Ctrl-F9 to open buffer list
+map <C-F9> :buffers<CR>:b
 
-    " Removes trailing spaces
-    function! TabsToSpaces()
-        %s/\t/    /ge
-    endfunction
+" Map F10 to close the current window
+map <F10> :clo<CR>
 
-    " Remove \r characters
-    function! RemoveCarriageReturns()
-        %s/\r//ge
-    endfunction
+" Map F11 to toggle showing hidden chars
+map <F11> :set list!<CR>:set list?<CR>
 
-    " Remove multiblank lines
-    function! RemoveMultiblankLines()
-        g/^\s*\n$/d
-    endfunction
+" Map Ctrl-F11 to start debugger
+map <C-F11> :LaunchDebugger<CR>
 
-    function! Cleanup()
-        set fileformat=unix
-        set expandtab
-        call TrimWhiteSpace()
-        call TabsToSpaces()
-        call RemoveMultiblankLines()
-        call RemoveCarriageReturns()
-        echomsg "File Cleaned Up."
-    endfunction
+" Map Ctrl-F12 to toggle Conque shell
+map <C-F12> :ConqueTermSplit bash<CR><ESC>:resize 5<CR>a
+" Map F12 to go to bottom window and insert mode (for Conque)
+map <F12> :wincmd b<CR>a
 
-    " Fix some php styles (Zend standard)
-    function! FixStyles()
-        call FixControlStructureSpacing()
-        " Put the opening brace of a function on a new line
-        %s/\(public \|private \|protected \|\)\(static \|\)\s*function \(.*\))\s*{/\1\2function \3)\r    {/e
-    endfunction
+" Make gb go to the next buffer
+nmap gb :bnext<CR>
 
-    function! FixControlStructureSpacing()
-        " Fix spacing in if, for, foreach lines
-        %s/\(if\|foreach\|for\)\s*(\(.*\))\s*\n\?\s*{/\1 (\2) {/e
+" Make gr go to previous tab
+nmap gr :tabprev<CR>
 
-        " Fix spacing in else lines
-        %s/}\s*\n*\s*else\s*\n*\s*{/} else {/e
+" Keep the text highlighted when tab-shifting
+vnoremap < <gv
+vnoremap > >gv
 
-        " Fix spacing in elseif lines
-        %s/}\s*\n*\s*elseif\s*(\(.*\))\s*\n\?\s*{/} elseif (\1) {/e
-    endfunction
+" Prevent error messages when mistyping :w and :q
+command W w
+command Q q
 
-    " Check box
-    function! s:CheckBox()
-        normal mxF[lrX`x
-    endfunction
-    command! Checkbox call s:CheckBox()
-    nmap <C-Space> :Checkbox<CR>
+" Map <leader>5 to Clean up file
+map <silent> <leader>5 m`:call Cleanup()<CR>``zz
 
-    " Uncheck box
-    function! s:UncheckBox()
-        normal mxF[lr `x
-    endfunction
-    command! Uncheckbox call s:UncheckBox()
+" Map <leader>8 to highlight chars past 80th col
+map <silent> <leader>8 :match OverLength /\%81v.*/<CR>
 
-    " Set environment for a child
-    function! s:Eva()
-        if has('win32')
-            set guifont=Envy_Code_R:h25:cANSI
-        else
-            set guifont=Envy\ Code\ R\ 25 
-        endif
-        set nonumber
-        set laststatus=0 " Don't show the status line
-    endfunction
-    command! Eva call s:Eva()
+" Map <leader>7 to turn off highlighting chars past 80th col
+map <silent> <leader>7 :match none<CR>
 
-    " Set environment for an adult
-    function! s:Papi()
-        if has('win32')
-            set guifont=Envy_Code_R:h11:cANSI
-        else
-            set guifont=Envy\ Code\ R\ 10
-        endif
-        set number
-        set laststatus=2 " Always show the status line
-    endfunction
-    command! Papi call s:Papi()
+" Column scroll-binding on <leader>sb
+noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
 
-    " Replace special chars like smart quotes and endashes
-    function! s:ReplaceSpecialChars()
-        %s/“/``/g
-        %s/”/''/g
-        %s/’/'/g
-        %s/–/--/g " en-dash
-        %s/—/---/g " em-dash
-    endfunction
-    command! ReplaceSpecialChars call s:ReplaceSpecialChars()
-"
+" Plugin Settings {{{1
+" -----------------------------------
 
-" Load any machine specific directives
+" Init pathogen
+execute pathogen#infect()
+
+" Settings for showmarks
+let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ"
+let g:showmarks_ignore_type = "hqm"
+
+" Settings for syntastic
+let g:syntastic_mode_map = { 'mode': 'passive',
+                           \ 'active_filetypes': ['python', 'php'],
+                           \ 'passive_filetypes': [] }
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+
+" Functions {{{1
+" -----------------------------------
+
+" Removes trailing spaces
+function! TrimWhiteSpace()
+    %s/\s*$//e
+endfunction
+
+" Converts tabs to spaces
+function! TabsToSpaces()
+    %s/\t/    /ge
+endfunction
+
+" Remove \r characters
+function! RemoveCarriageReturns()
+    %s/\r//ge
+endfunction
+
+" Remove multiblank lines
+function! RemoveMultiblankLines()
+    g/^\s*\n$/d
+endfunction
+
+" Cleanup file
+function! Cleanup()
+    set fileformat=unix
+    set expandtab
+    call TrimWhiteSpace()
+    call TabsToSpaces()
+    call RemoveMultiblankLines()
+    call RemoveCarriageReturns()
+    echomsg "File Cleaned Up."
+endfunction
+
+" Fix some PHP styles (Zend standard)
+function! FixStyles()
+    call FixControlStructureSpacing()
+    " Put the opening brace of a function on a new line
+    %s/\(public \|private \|protected \|\)\(static \|\)\s*function \(.*\))\s*{/\1\2function \3)\r    {/e
+endfunction
+
+" Fix some PHP standards
+function! FixControlStructureSpacing()
+    " Fix spacing in if, for, foreach lines
+    %s/\(if\|foreach\|for\)\s*(\(.*\))\s*\n\?\s*{/\1 (\2) {/e
+
+    " Fix spacing in else lines
+    %s/}\s*\n*\s*else\s*\n*\s*{/} else {/e
+
+    " Fix spacing in elseif lines
+    %s/}\s*\n*\s*elseif\s*(\(.*\))\s*\n\?\s*{/} elseif (\1) {/e
+endfunction
+
+" Check box
+function! s:CheckBox()
+    normal mxF[lrX`x
+endfunction
+command! Checkbox call s:CheckBox()
+nmap <C-Space> :Checkbox<CR>
+
+" Uncheck box
+function! s:UncheckBox()
+    normal mxF[lr `x
+endfunction
+command! Uncheckbox call s:UncheckBox()
+
+" Set environment for a child
+function! s:BigFont()
+    if has('win32')
+        set guifont=Envy_Code_R:h25:cANSI
+    else
+        set guifont=Envy\ Code\ R\ 25 
+    endif
+    set nonumber
+    set laststatus=0 " Don't show the status line
+endfunction
+command! BigFont call s:BigFont()
+
+" Set environment for an adult
+function! s:NormalFont()
+    if has('win32')
+        set guifont=Envy_Code_R:h11:cANSI
+    else
+        set guifont=Envy\ Code\ R\ 10
+    endif
+    set number
+    set laststatus=2 " Always show the status line
+endfunction
+command! NormalFont call s:NormalFont()
+
+" Replace special chars like smart quotes and endashes
+function! s:ReplaceSpecialChars()
+    %s/“/``/g
+    %s/”/''/g
+    %s/’/'/g
+    %s/–/--/g " en-dash
+    %s/—/---/g " em-dash
+endfunction
+command! ReplaceSpecialChars call s:ReplaceSpecialChars()
+
+" Load any machine specific directives {{{1
+" -----------------------------------
 if filereadable($HOME . "/.vim/user.vim")
     source $HOME/.vim/user.vim
 endif
