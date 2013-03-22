@@ -101,9 +101,9 @@ set showmatch " Show matching brackets.
 
 " 15 tabs and indenting {{{2
 " -----------------------------------
-set tabstop=4 " Number of spaces that a tab counts
+set tabstop=4 " Number of spaces that a tab in the file counts
 set shiftwidth=4 " Number of spaces to use for auto-indent
-set softtabstop=4 " How many spaces per tab
+set softtabstop=4 " How many spaces per tab during edit operations
 set expandtab " Expand <Tab> to spaces in Insert mode
 set autoindent " Automatically set the indent of a new line
 
