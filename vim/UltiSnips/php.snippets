@@ -1,0 +1,23 @@
+snippet getset "Write getter and setter" b
+/**
+ * Set ${1:variableName}
+ *
+ * @param mixed \$value Value to set
+ * @return self
+ */
+public function set${1/(\w)(\w*)\W*/\u$1$2/g}(\$value)
+{
+    \$this->_${1/(\w)(\w*)\W*/\u$1$2/g} = \$value;
+    return $this;
+}
+
+/**
+ * Get $1
+ *
+ * @return mixed
+ */
+public function get${1/(\w)(\w*)\W*/\u$1$2/g}()
+{
+    return $this->_${1/(\w)(\w*)\W*/\u$1$2/g};
+}
+endsnippet
