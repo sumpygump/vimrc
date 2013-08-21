@@ -34,6 +34,7 @@
 [submodule "vim/bundle/bufexplorer"]
 	path = vim/bundle/bufexplorer
 	url = git://github.com/thisivan/vim-bufexplorer.git
+    ignore = dirty
 [submodule "vim/bundle/ack-vim"]
 	path = vim/bundle/ack-vim
 	url = git://github.com/mileszs/ack.vim.git
