@@ -22,10 +22,6 @@
 [submodule "vim/bundle/debugger"]
 	path = vim/bundle/debugger
 	url = git://github.com/sumpygump/vim-php-debugger.git
-[submodule "vim/bundle/conque"]
-	path = vim/bundle/conque
-	url = git://github.com/rson/vim-conque.git
-    ignore = dirty
 [submodule "vim/bundle/hjkl"]
 	path = vim/bundle/hjkl
 	url = git://github.com/vim-scripts/HJKL.git
