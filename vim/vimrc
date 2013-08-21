@@ -217,11 +217,6 @@ map <F11> :set list!<CR>:set list?<CR>
 " Map Ctrl-F11 to start debugger
 map <C-F11> :LaunchDebugger<CR>
 
-" Map Ctrl-F12 to toggle Conque shell
-map <C-F12> :ConqueTermSplit bash<CR><ESC>:resize 5<CR>a
-" Map F12 to go to bottom window and insert mode (for Conque)
-map <F12> :wincmd b<CR>a
-
 " Make gb go to the next buffer
 nnoremap gb :bnext<CR>
 
