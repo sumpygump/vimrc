@@ -21,3 +21,46 @@ public function get${1/(\w)(\w*)\W*/\u$1$2/g}()
     return $this->_${1/(\w)(\w*)\W*/\u$1$2/g};
 }
 endsnippet
+
+snippet testfile "Create phpunit test file" b
+<?php
+/**
+ * ${1:Class} Test File
+ *
+ * @package ${2:package}
+ */
+
+namespace $2;
+
+use Nerdery\Tests\BaseTestCase;
+use $2;
+
+/**
+ * $1 Test
+ *
+ * @uses BaseTestCase
+ * @package $2
+ * @author Jansen Price <jansen.price@nerdery.com>
+ * @version $Id$
+ */
+class $1Test extends BaseTestCase
+{
+    /**
+     * setUp
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+    }
+
+    /**
+     * tearDown
+     *
+     * @return void
+     */
+    public function tearDown()
+    {
+    }
+}
+endsnippet
