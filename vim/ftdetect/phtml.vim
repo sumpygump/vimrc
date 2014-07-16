@@ -1,1 +1,1 @@
-autocmd BufRead,BufNewFile *.phtml set filetype=php
+autocmd BufRead,BufNewFile *.phtml set filetype=phtml
