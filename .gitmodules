@@ -35,9 +35,6 @@
 	path = vim/bundle/bufexplorer
 	url = git://github.com/thisivan/vim-bufexplorer.git
     ignore = dirty
-[submodule "vim/bundle/ack-vim"]
-	path = vim/bundle/ack-vim
-	url = git://github.com/mileszs/ack.vim.git
 [submodule "vim/bundle/gitv"]
 	path = vim/bundle/gitv
 	url = git://github.com/gregsexton/gitv.git
