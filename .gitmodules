@@ -44,6 +44,7 @@
 [submodule "vim/bundle/vim-tags"]
 	path = vim/bundle/vim-tags
 	url = git://github.com/szw/vim-tags.git
+    ignore = dirty
 [submodule "vim/bundle/vim-scala"]
 	path = vim/bundle/vim-scala
 	url = https://github.com/derekwyatt/vim-scala
