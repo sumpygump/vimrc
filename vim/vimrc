@@ -187,7 +187,7 @@ map <F3> :bprev<CR>
 map <F4> :bnext<CR>
 
 " Map F5 to toggle Gundo
-map <F5> :GundoToggle<CR>
+"map <F5> :GundoToggle<CR>
 
 " Map F6 to toggle the Nerd tree
 map <F6> :NERDTreeToggle<CR>
@@ -204,7 +204,7 @@ map <F8> :MarksBrowser<CR>
 map <C-F8> :make<CR>
 
 " Map F9 to open buffer explorer
-map <F9> :BufExplorer<CR>
+map <F9> :Denite buffer<CR>
 
 " Map Ctrl-F9 to open buffer list
 map <C-F9> :buffers<CR>:b
@@ -229,8 +229,8 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Prevent error messages when mistyping :w and :q
-command W w
-command Q q
+command! W w
+command! Q q
 
 " Map <leader>5 to Clean up file
 noremap <silent> <leader>5 m`:call Cleanup()<CR>``zz
@@ -247,14 +247,31 @@ noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljz
 " Plugin Settings {{{1
 " -----------------------------------
 
+" Init Plug
+call plug#begin('~/.vim/plugged')
+Plug 'scrooloose/nerdtree'
+Plug 'vim-syntastic/syntastic'
+Plug 'mileszs/ack.vim'
+Plug 'corntrace/bufexplorer'
+Plug 'Shougo/denite.nvim'
+Plug 'sumpygump/vim-php-debugger'
+Plug 'tpope/vim-fugitive'
+Plug 'gregsexton/gitv', {'on': ['Gitv']}
+Plug 'othree/html5.vim'
+Plug 'vim-scripts/Marks-Browser'
+Plug 'sumpygump/php-documentor-vim'
+Plug 'vim-scripts/ShowMarks'
+Plug 'ervandew/supertab'
+Plug 'majutsushi/tagbar', {'on': ['TagbarToggle']}
+Plug 'szw/vim-tags'
+Plug '~/vimrc/vim/dist-plugins/qis'
+call plug#end()
+
 " Lilypond
 filetype off
 set runtimepath+=/usr/share/lilypond/2.18.2/vim/
 filetype on
 syntax on
-
-" Init pathogen
-execute pathogen#infect()
 
 " Settings for showmarks
 let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ"
