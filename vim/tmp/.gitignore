@@ -1,5 +1,3 @@
 *.swp
 *.vim
-*.swm
-*.swn
-*.swo
+*.sw*
