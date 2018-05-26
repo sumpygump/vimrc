@@ -247,6 +247,12 @@ noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljz
 " Plugin Settings {{{1
 " -----------------------------------
 
+" Lilypond
+filetype off
+set runtimepath+=/usr/share/lilypond/2.18.2/vim/
+filetype on
+syntax on
+
 " Init pathogen
 execute pathogen#infect()
 
