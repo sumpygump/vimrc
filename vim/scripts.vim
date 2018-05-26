@@ -11,3 +11,8 @@ let s:line1 = getline(1)
 if s:line1 =~ '/^-\{72\}$/'
     setfiletype svnlog
 endif
+
+" Detect node
+if s:line1 =~# '^#!.*/bin/env\s\+node\>'
+    setfiletype javascript
+endif
