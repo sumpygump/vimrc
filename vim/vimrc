@@ -186,8 +186,8 @@ map <F3> :bprev<CR>
 " Map F4 to go to the next buffer
 map <F4> :bnext<CR>
 
-" Map F5 to toggle Gundo
-"map <F5> :GundoToggle<CR>
+" Map F5 to toggle airline
+map <F5> :AirlineToggle<CR>
 
 " Map F6 to toggle the Nerd tree
 map <F6> :NERDTreeToggle<CR>
@@ -249,21 +249,23 @@ noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljz
 
 " Init Plug
 call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/nerdtree'
-Plug 'vim-syntastic/syntastic'
-Plug 'mileszs/ack.vim'
 Plug 'corntrace/bufexplorer'
-Plug 'Shougo/denite.nvim'
-Plug 'sumpygump/vim-php-debugger'
-Plug 'tpope/vim-fugitive'
-Plug 'gregsexton/gitv', {'on': ['Gitv']}
-Plug 'othree/html5.vim'
-Plug 'vim-scripts/Marks-Browser'
-Plug 'sumpygump/php-documentor-vim'
-Plug 'vim-scripts/ShowMarks'
 Plug 'ervandew/supertab'
+Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'majutsushi/tagbar', {'on': ['TagbarToggle']}
+Plug 'mileszs/ack.vim'
+Plug 'othree/html5.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'Shougo/denite.nvim'
+Plug 'sumpygump/php-documentor-vim'
+Plug 'sumpygump/vim-php-debugger'
 Plug 'szw/vim-tags'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-scripts/Marks-Browser'
+Plug 'vim-scripts/ShowMarks'
+Plug 'vim-syntastic/syntastic'
 Plug '~/vimrc/vim/dist-plugins/qis'
 call plug#end()
 

@@ -18,10 +18,6 @@ cd "$INSTALL_TO"
 git clone git://github.com/sumpygump/vimrc.git
 cd vimrc
 
-# Download vim plugin bundles
-git submodule init
-git submodule update
-
 # Symlink ~/.vim and ~/.vimrc
 cd ~
 ln -s "$INSTALL_TO/vimrc/vim/vimrc" .vimrc
