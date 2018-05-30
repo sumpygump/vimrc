@@ -24,6 +24,9 @@ ln -s "$INSTALL_TO/vimrc/vim/vimrc" .vimrc
 ln -s "$INSTALL_TO/vimrc/vim" .vim
 touch ~/.vim/user.vim
 
+# Plug Install
+vim +PlugInstall +qall
+
 echo "You should run this:"
 echo "sudo apt-get install exuberant-ctags"
 
