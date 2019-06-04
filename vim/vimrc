@@ -160,7 +160,7 @@ au BufRead,BufNewFile *.php vnoremap <buffer> <C-P> :call PhpDocRange()<CR>
 
 " Set dictionary for PHP
 " TODO Need better solution for php dict or else remove
-au BufRead,BufNewFile *.php set dictionary=~/.vim/dict/php
+"au BufRead,BufNewFile *.php set dictionary=~/.vim/dict/php
 
 " epub
 au BufReadCmd   *.epub      call zip#Browse(expand("<amatch>"))
@@ -169,6 +169,7 @@ au BufReadCmd   *.epub      call zip#Browse(expand("<amatch>"))
 au FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
 
 " Used for highlighting lines more than 80 characters long
+set colorcolumn=81
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 
 " Mappings {{{1
@@ -236,7 +237,7 @@ command! Q q
 noremap <silent> <leader>5 m`:call Cleanup()<CR>``zz
 
 " Map <leader>8 to highlight chars past 80th col
-noremap <silent> <leader>8 :match OverLength /\%81v.*/<CR>
+noremap <silent> <leader>8 :highlight ColorColumn ctermbg=lightgrey guibg=#204A87
 
 " Map <leader>7 to turn off highlighting chars past 80th col
 noremap <silent> <leader>7 :match none<CR>
@@ -284,8 +285,10 @@ let g:showmarks_ignore_type = "hqm"
 
 " Settings for syntastic
 let g:syntastic_mode_map = { 'mode': 'passive',
-                           \ 'active_filetypes': ['python', 'php'],
+                           \ 'active_filetypes': [],
                            \ 'passive_filetypes': [] }
+
+" Settings for Ack
 let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 
 " Supertab uses omni-completion
