@@ -21,9 +21,9 @@ set scrolloff=2 " Keep 2 lines on top and bottom
 set wrap " Long lines wrap
 set showbreak=↪ " String to put before wrapped screen lines
 set lazyredraw " Do not redraw while running macros
-set list " Show whitespace characters
-"set listchars=eol:#,tab:>-,trail:# " Whitespace characters
-set listchars=tab:>- " Whitespace characters
+"set list " Show whitespace characters
+"set listchars=eol:#,tab:>-,trail:· " Whitespace characters
+set listchars=tab:>-,trail:· " Whitespace characters
 set number " Show line numbers
 
 " 5 syntax, highlighting and spelling {{{2
@@ -88,7 +88,7 @@ set showcmd " Show (partial) command in status line
 set ruler " Show the line and col number of the cursor position
 set noerrorbells " Don't beep for error messages
 set novisualbell " No visual bell
-"set vb t_vb= " No beeps or flash
+set vb t_vb= " No beeps or flash
 
 " 13 selecting text {{{2
 " -----------------------------------
@@ -204,7 +204,7 @@ map <F8> :MarksBrowser<CR>
 map <C-F8> :make<CR>
 
 " Map F9 to open buffer explorer
-map <F9> :Denite buffer<CR>
+map <F9> :Denite file/rec buffer<CR>
 
 " Map Ctrl-F9 to open buffer list
 map <C-F9> :buffers<CR>:b
@@ -249,18 +249,21 @@ noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljz
 
 " Init Plug
 call plug#begin('~/.vim/plugged')
+Plug 'alvan/vim-php-manual'
 Plug 'corntrace/bufexplorer'
 Plug 'ervandew/supertab'
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'majutsushi/tagbar', {'on': ['TagbarToggle']}
 Plug 'mileszs/ack.vim'
 Plug 'othree/html5.vim'
+Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'Shougo/denite.nvim'
 Plug 'sumpygump/php-documentor-vim'
 Plug 'sumpygump/vim-php-debugger'
 Plug 'szw/vim-tags'
 Plug 'tpope/vim-fugitive'
+Plug 'lvht/phpcd.vim', {'for': 'php', 'do': 'composer install'}
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/Marks-Browser'
@@ -285,13 +288,9 @@ let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'passive_filetypes': [] }
 let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 
-" Settings for UltiSnips
-let g:UltiSnipsExpandTrigger="<c-f>"
-let g:UltiSnipsJumpForwardTrigger="<c-f>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-
 " Supertab uses omni-completion
 "let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+let g:SuperTabDefaultCompletionType = "context"
 
 " Functions {{{1
 " -----------------------------------
@@ -364,7 +363,7 @@ function! s:BigFont()
     if has('win32')
         set guifont=Envy_Code_R:h25:cANSI
     else
-        set guifont=Envy\ Code\ R\ 25 
+        set guifont=Envy\ Code\ R\ 25
     endif
     set nonumber
     set laststatus=0 " Don't show the status line
