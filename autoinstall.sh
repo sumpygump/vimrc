@@ -18,11 +18,25 @@ cd "$INSTALL_TO"
 git clone git://github.com/sumpygump/vimrc.git
 cd vimrc
 
+echo "----------------"
+
+symlink_with_checks() {
+    sourcepath="$1"
+    targetname="$2"
+    if [ -e "$targetname" ]; then
+        warn "Not symlinking $targetname; already exists"
+    else
+        ln -s "$sourcepath" "$targetname"
+    fi
+}
+
 # Symlink ~/.vim and ~/.vimrc
 cd ~
-ln -s "$INSTALL_TO/vimrc/vim/vimrc" .vimrc
-ln -s "$INSTALL_TO/vimrc/vim" .vim
+symlink_with_checks "$INSTALL_TO/vimrc/vim/vimrc" .vimrc
+symlink_with_checks "$INSTALL_TO/vimrc/vim" .vim
 touch ~/.vim/user.vim
+
+echo "----------------"
 
 # Plug Install
 ## Detect if installed version of vim will work
@@ -37,7 +51,10 @@ else
     echo "vim +PlugInstall +qall"
 fi
 
+echo "----------------"
+
 echo "You should run this:"
 echo "sudo apt install exuberant-ctags"
+echo
 
 echo "Installed and configured .vim, have fun."
