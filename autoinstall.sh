@@ -25,9 +25,19 @@ ln -s "$INSTALL_TO/vimrc/vim" .vim
 touch ~/.vim/user.vim
 
 # Plug Install
-vim +PlugInstall +qall
+## Detect if installed version of vim will work
+vim --version | grep "\+syntax" > /dev/null
+if [ $? -eq 0 ]; then
+    vim +PlugInstall +qall
+else
+    echo "NOTE: installed version of vim doesn't support plugins"
+    echo "Skipped install of plugins"
+    echo "Perhaps upgrade vim (apt install vim)"
+    echo "And then run this:"
+    echo "vim +PlugInstall +qall"
+fi
 
 echo "You should run this:"
-echo "sudo apt-get install exuberant-ctags"
+echo "sudo apt install exuberant-ctags"
 
 echo "Installed and configured .vim, have fun."
