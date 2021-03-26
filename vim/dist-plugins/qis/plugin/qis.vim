@@ -2,12 +2,12 @@
 " File:        qis.vim
 " Description: Vim plugin for QIS (Quantal Integration System)
 " Maintainer:  Jansen Price <jansen.price at gmail dot com>
-" Last Change: 2011-11-15
+" Last Change: 2020-09-04
 " License:     http://www.opensource.org/licenses/mit-license.php MIT
 " Usage:       Run qis command to see the code coverage
 "              reports and analysis files
 " ============================================================================
-let s:Version = '1.0.9'
+let s:Version = '1.0.10'
 
 " Storage for the appended number to keep the buffer names unique
 let s:nextBufferNumber = 1
@@ -59,9 +59,9 @@ function! s:RunTestSingle()
     let t:coverageIndexLineNumber = line('.')
 
     " Find the filename for which to run the test
-    let s:filename = matchstr(getline('.'), '^\f\+')
+    let s:filename = substitute(matchstr(getline('.'), '^\f\+'), '.php', '', '')
     call s:echo("Running qis test on file " . s:filename . " ...")
-    exec "%!qis test " . s:filename . "Test"
+    exec "%!qis test " . s:filename . "Test.php"
     normal 1G
     call s:printTestHelp()
     call s:echo("Running qis test on file " . s:filename . " ... DONE")
