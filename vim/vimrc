@@ -264,7 +264,7 @@ Plug 'sumpygump/php-documentor-vim'
 Plug 'sumpygump/vim-php-debugger'
 Plug 'szw/vim-tags'
 Plug 'tpope/vim-fugitive'
-Plug 'lvht/phpcd.vim', {'for': 'php', 'do': 'composer install'}
+"Plug 'lvht/phpcd.vim', {'for': 'php', 'do': 'composer install'}
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/Marks-Browser'
@@ -272,6 +272,9 @@ Plug 'vim-scripts/ShowMarks'
 Plug 'vim-syntastic/syntastic'
 Plug '~/vimrc/vim/dist-plugins/qis'
 call plug#end()
+
+" Settings for NerdTree
+let NERDTreeIgnore=['__pycache__', '\.pyc$']
 
 " Lilypond
 filetype off
@@ -286,7 +289,7 @@ let g:showmarks_ignore_type = "hqm"
 " Settings for syntastic
 let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'active_filetypes': [],
-                           \ 'passive_filetypes': [] }
+                           \ 'passive_filetypes': ['go'] }
 
 " Settings for Ack
 let g:ackprg="ack-grep -H --nocolor --nogroup --column"
