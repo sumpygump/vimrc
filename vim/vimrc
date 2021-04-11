@@ -263,7 +263,7 @@ noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljz
 " -----------------------------------
 
 " Init Plug
-if exists(':Plug')
+if exists(':call')
     call plug#begin('~/.vim/plugged')
     Plug 'alvan/vim-php-manual'
     Plug 'corntrace/bufexplorer'
