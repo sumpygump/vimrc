@@ -75,11 +75,11 @@ if has('gui_running')
     set guioptions+=r
     set guioptions+=l
 
-    if has('win32')
-        set guifont=Envy_Code_R:h10:cANSI
-    else
-        set guifont=Envy\ Code\ R\ 10
-    endif
+    "if has('win32')
+        "set guifont=Envy_Code_R:h10:cANSI
+    "else
+        "set guifont=Envy\ Code\ R\ 10
+    "endif
 
     " Maximize (Windows only)
     if has('win32')
@@ -181,11 +181,13 @@ if exists(':au')
 endif
 
 " Used for highlighting lines more than 80 characters long
-set colorcolumn=81
+set colorcolumn=89
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 
 " Mappings {{{1
 " -----------------------------------
+
+map <F1> :SwapColorscheme<CR>
 
 " Map F2 to toggle highlight search results
 map <F2> :set hlsearch!<CR>:set hlsearch?<CR>
@@ -199,8 +201,8 @@ map <F3> :bprev<CR>
 " Map F4 to go to the next buffer
 map <F4> :bnext<CR>
 
-" Map F5 to toggle airline
-map <F5> :AirlineToggle<CR>
+" Map F5 to toggle marks browser
+map <F5> :MarksBrowser<CR>
 
 " Map F6 to toggle the Nerd tree
 map <F6> :NERDTreeToggle<CR>
@@ -210,17 +212,21 @@ map <C-F6> :wincmd t<CR>
 " Map F7 to toggle the Tagbar
 map <F7> :TagbarToggle<CR>
 
-" Map F8 to view
-map <F8> :MarksBrowser<CR>
+" Map F8 to next loc
+map <F8> :lnext<CR>
+
+" Map Shift-F8 to prev loc
+map <S-F8> :lprev<CR>
 
 " Map Ctrl-F8 to trigger make
 map <C-F8> :make<CR>
 
-" Map F9 to open buffer explorer
-map <F9> :Denite file/rec buffer<CR>
+" Map F9 to open loclist
+map <F9> :lopen<CR>
 
 " Map Ctrl-F9 to open buffer list
-map <C-F9> :buffers<CR>:b
+map <C-F9> :BufExplorer<CR>
+" map <C-F9> :buffers<CR>:b
 
 " Map F10 to close the current window
 map <F10> :clo<CR>
@@ -251,13 +257,24 @@ endif
 noremap <silent> <leader>5 m`:call Cleanup()<CR>``zz
 
 " Map <leader>8 to highlight chars past 80th col
-noremap <silent> <leader>8 :highlight ColorColumn ctermbg=lightgrey guibg=#204A87
+noremap <silent> <leader>8 :highlight ColorColumn ctermbg=lightgrey guibg=#204A87<CR>
 
 " Map <leader>7 to turn off highlighting chars past 80th col
 noremap <silent> <leader>7 :match none<CR>
 
 " Column scroll-binding on <leader>sb
 noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
+
+nnoremap <silent> <leader>] :NextColorScheme<CR>
+nnoremap <silent> <leader>[ :NextColorScheme<CR>
+
+" delete without yanking
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+
+" replace currently selected text with default register
+" without yanking it
+vnoremap <leader>p "_dP
 
 " Plugin Settings {{{1
 " -----------------------------------
@@ -266,15 +283,18 @@ noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljz
 if exists(':call')
     call plug#begin('~/.vim/plugged')
     Plug 'alvan/vim-php-manual'
+    Plug 'davidhalter/jedi-vim'
     Plug 'corntrace/bufexplorer'
+    Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'dense-analysis/ale'
     Plug 'ervandew/supertab'
     Plug 'gregsexton/gitv', {'on': ['Gitv']}
+    Plug 'leafgarland/typescript-vim'
     Plug 'majutsushi/tagbar', {'on': ['TagbarToggle']}
     Plug 'mileszs/ack.vim'
     Plug 'othree/html5.vim'
     Plug 'scrooloose/nerdcommenter'
     Plug 'scrooloose/nerdtree'
-    Plug 'Shougo/denite.nvim'
     Plug 'sumpygump/php-documentor-vim'
     Plug 'sumpygump/vim-php-debugger'
     Plug 'szw/vim-tags'
@@ -284,10 +304,13 @@ if exists(':call')
     Plug 'vim-airline/vim-airline-themes'
     Plug 'vim-scripts/Marks-Browser'
     Plug 'vim-scripts/ShowMarks'
-    Plug 'vim-syntastic/syntastic'
+    Plug 'vim-python/python-syntax'
     Plug '~/vimrc/vim/dist-plugins/qis'
     call plug#end()
 endif
+
+"NerdTree
+let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
 " Lilypond
 if exists(':filetype')
@@ -304,17 +327,26 @@ if exists(':let')
     let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ"
     let g:showmarks_ignore_type = "hqm"
 
-    " Settings for syntastic
-    let g:syntastic_mode_map = { 'mode': 'passive',
-                               \ 'active_filetypes': [],
-                               \ 'passive_filetypes': ['go'] }
-
     " Settings for Ack
     let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 
     " Supertab uses omni-completion
     "let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-    let g:SuperTabDefaultCompletionType = "context"
+    "let g:SuperTabDefaultCompletionType = "context"
+
+    " Settings for ctrlp
+    let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:10'
+
+    " Settings for ALE
+    let g:ale_linters = {'python': ['pylint']}
+    let g:ale_fixers = {'python': ['black']}
+    let g:ale_fix_on_save = 1
+    let g:ale_pattern_options = {
+    \   '.*.venv/.*$': {'ale_enabled': 0},
+    \}
+
+    " Settings for jedi-vim
+    let g:jedi#completions_enabled = 0
 endif
 
 " Functions {{{1
@@ -383,30 +415,6 @@ if exists(':function')
     endfunction
     command! Uncheckbox call s:UncheckBox()
 
-    " Set environment for a child
-    function! s:BigFont()
-        if has('win32')
-            set guifont=Envy_Code_R:h25:cANSI
-        else
-            set guifont=Envy\ Code\ R\ 25
-        endif
-        set nonumber
-        set laststatus=0 " Don't show the status line
-    endfunction
-    command! BigFont call s:BigFont()
-
-    " Set environment for an adult
-    function! s:NormalFont()
-        if has('win32')
-            set guifont=Envy_Code_R:h11:cANSI
-        else
-            set guifont=Envy\ Code\ R\ 10
-        endif
-        set number
-        set laststatus=2 " Always show the status line
-    endfunction
-    command! NormalFont call s:NormalFont()
-
     " Replace special chars like smart quotes and endashes
     function! s:ReplaceSpecialChars()
         %s/“/``/g
@@ -416,21 +424,59 @@ if exists(':function')
         %s/—/---/g " em-dash
     endfunction
     command! ReplaceSpecialChars call s:ReplaceSpecialChars()
-
-    " Completely disable syntastic
-    function! s:DisableSyntastic()
-        let g:syntastic_mode_map_backup = g:syntastic_mode_map
-        let g:syntastic_mode_map = { 'mode': 'passive',
-                                   \ 'active_filetypes': [],
-                                   \ 'passive_filetypes': [] }
+    " Switch between two different colorschemes
+    function! s:SwapColorscheme()
+        if exists("g:tango_night")
+            if g:tango_night == 1
+                let g:tango_night = 0
+            else
+                let g:tango_night = 1
+            endif
+        else
+            let g:tango_night = 0
+        endif
+        colorscheme tango
     endfunction
-    command! DisableSyntastic call s:DisableSyntastic()
+    command! SwapColorscheme call s:SwapColorscheme()
 
-    " Enable syntastic
-    function! s:EnableSyntastic()
-        let g:syntastic_mode_map = g:syntastic_mode_map_backup
+    " Show syntax highlighting groups for word under cursor
+    nmap <C-S-P> :call <SID>SynStack()<CR>
+    function! <SID>SynStack()
+        if !exists("*synstack")
+            return
+        endif
+        echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+    endfunc
+
+    if exists('*HexHighlight()')
+      nmap <leader>h :call HexHighlight()<Return>
+    endif
+
+    " Use this to activate a python venv
+    " Assumes you first cd to the directory where .venv exists
+    " Then it will run .venv/bin/activate and propagate the environment vars
+    " resulting from that into your vim session
+    function! s:ActivateVenv()
+    python3 << EOF
+import os
+import sys
+import subprocess
+
+project_base_dir = ".venv"
+script = os.path.join(project_base_dir, "bin/activate")
+
+pipe = subprocess.Popen("source {}; env".format(script), stdout=subprocess.PIPE, shell=True)
+
+output = pipe.communicate()[0].decode('utf8').splitlines()
+env = dict((line.split("=", 1) for line in output))
+if env:
+    os.environ.update(env)
+    print("Loaded venv from {}".format(script))
+else:
+    print("No .venv found")
+EOF
     endfunction
-    command! EnableSyntastic call s:EnableSyntastic()
+    command! Activate call s:ActivateVenv()
 endif
 
 " Load any machine specific directives {{{1

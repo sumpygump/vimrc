@@ -7,7 +7,7 @@
 "                   |___/
 "-----------------------------------------------------------------
 " Theme:   Tango
-" Version: 1.0.0
+" Version: 1.0.1
 " License: MIT
 " Author:  Jansen Price
 "-----------------------------------------------------------------
@@ -16,8 +16,8 @@
 "-----------------------------------------------------------------
 
 let g:airline#themes#tango#palette = {}
-let g:airline_symbols.branch = '%'
-let g:airline_symbols.notexists = '~'
+" let g:airline_symbols.branch = '%'
+" let g:airline_symbols.notexists = '~'
 
 function! airline#themes#tango#refresh()
 
