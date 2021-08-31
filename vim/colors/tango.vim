@@ -38,39 +38,39 @@ let colors_name = "tango"
 "-----------------------------------------------------------------
 
 " Define the Tango Color Palette
-let s:aluminium_hl  = "#eeeeec"
-let s:aluminium     = "#d3d7cf"
-let s:aluminium_sd  = "#babdb6"
-let s:butter_hl     = "#fce94f"
-let s:butter        = "#edd400"
-let s:butter_sd     = "#c4a000"
-let s:orange_hl     = "#fcaf3e"
-let s:orange        = "#f57900"
-let s:orange_sd     = "#ce5c00"
-let s:chocolate_hl  = "#e9b96e"
-let s:chocolate     = "#c17d11"
-let s:chocolate_sd  = "#8f5902"
-let s:chameleon_hl  = "#8ae234"
-let s:chameleon     = "#73d216"
-let s:chameleon_sd  = "#4e9a06"
-let s:skyblue_hl    = "#729fcf"
-let s:skyblue       = "#3465a4"
-let s:skyblue_sd    = "#204a87"
-let s:plum_hl       = "#ad7fa8"
-let s:plum          = "#75507b"
-let s:plum_sd       = "#5c3566"
-let s:slate_hl      = "#888a85"
-let s:slate         = "#555753"
-let s:slate_sd      = "#2e3436"
-let s:scarletred_hl = "#ef2929"
-let s:scarletred    = "#cc0000"
-let s:scarletred_sd = "#a40000"
+let s:aluminium_hl  = {"gui": "#eeeeec", "term": 7}
+let s:aluminium     = {"gui": "#d3d7cf", "term": 252}
+let s:aluminium_sd  = {"gui": "#babdb6", "term": 250}
+let s:butter_hl     = {"gui": "#fce94f", "term": 221}
+let s:butter        = {"gui": "#edd400", "term": 220}
+let s:butter_sd     = {"gui": "#c4a000", "term": 178}
+let s:orange_hl     = {"gui": "#fcaf3e", "term": 215}
+let s:orange        = {"gui": "#f57900", "term": 208}
+let s:orange_sd     = {"gui": "#ce5c00", "term": 166}
+let s:chocolate_hl  = {"gui": "#e9b96e", "term": 179}
+let s:chocolate     = {"gui": "#c17d11", "term": 136}
+let s:chocolate_sd  = {"gui": "#8f5902", "term": 94}
+let s:chameleon_hl  = {"gui": "#8ae234", "term": 113}
+let s:chameleon     = {"gui": "#73d216", "term": 76}
+let s:chameleon_sd  = {"gui": "#4e9a06", "term": 64}
+let s:skyblue_hl    = {"gui": "#729fcf", "term": 74}
+let s:skyblue       = {"gui": "#3465a4", "term": 61}
+let s:skyblue_sd    = {"gui": "#204a87", "term": 24}
+let s:plum_hl       = {"gui": "#ad7fa8", "term": 139}
+let s:plum          = {"gui": "#75507b", "term": 96}
+let s:plum_sd       = {"gui": "#5c3566", "term": 239}
+let s:slate_hl      = {"gui": "#888a85", "term": 102}
+let s:slate         = {"gui": "#555753", "term": 240}
+let s:slate_sd      = {"gui": "#2e3436", "term": 236}
+let s:scarletred_hl = {"gui": "#ef2929", "term": 9}
+let s:scarletred    = {"gui": "#cc0000", "term": 1}
+let s:scarletred_sd = {"gui": "#a40000", "term": 124}
 
 " These are non-standard but look good with tango
-let s:skyblue_dark = "#11284a"
-let s:skyblue_dusk = "#21385a"
-let s:night        = "#1e1e1e"
-let s:cyan         = "#06989a"
+let s:skyblue_dark = {"gui": "#11284a", "term": 236}
+let s:skyblue_dusk = {"gui": "#21385a", "term": 237}
+let s:night        = {"gui": "#1e1e1e", "term": 234}
+let s:cyan         = {"gui": "#06989a", "term": 30}
 
 " }}}
 
@@ -88,11 +88,27 @@ let s:cyan         = "#06989a"
 "
 " Example: call s:gui_hi("Normal", {"fg": "#343455", "fmt": "bold"})
 function! s:gui_hi(group, style)
+    if has("gui_running")
+        execute "highlight!" a:group
+            \ "guifg=" (has_key(a:style, "fg")  ? a:style.fg.gui : "NONE")
+            \ "guibg=" (has_key(a:style, "bg")  ? a:style.bg.gui : "NONE")
+            \ "guisp=" (has_key(a:style, "sp")  ? a:style.sp.gui : "NONE")
+            \ "gui="   (has_key(a:style, "fmt") ? a:style.fmt    : "NONE")
+    elseif &t_Co > 8
+        execute "highlight!" a:group
+            \ "ctermfg=" (has_key(a:style, "fg") ? a:style.fg.term : "NONE")
+            \ "ctermbg=" (has_key(a:style, "bg") ? a:style.bg.term : "NONE")
+            \ "cterm="   (has_key(a:style, "fmt") ? a:style.fmt    : "NONE")
+    else
+    endif
+endfunction
+
+function! s:t_hi(group, style)
     execute "highlight!" a:group
-        \ "guifg=" (has_key(a:style, "fg")  ? a:style.fg  : "NONE")
-        \ "guibg=" (has_key(a:style, "bg")  ? a:style.bg  : "NONE")
-        \ "guisp=" (has_key(a:style, "sp")  ? a:style.sp  : "NONE")
-        \ "gui="   (has_key(a:style, "fmt") ? a:style.fmt : "NONE")
+        \ "ctermfg=" (has_key(a:style, "fg") ? a:style.fg : "NONE")
+        \ "ctermbg=" (has_key(a:style, "bg") ? a:style.bg : "NONE")
+        \ " " (has_key(a:style, "fmt") ? "cterm=". a:style.fmt : "")
+        \ " " (has_key(a:style, "term") ? "term=". a:style.term : "")
 endfunction
 
 " }}}
@@ -195,39 +211,33 @@ call s:gui_hi("Todo",       {"fg": s:chameleon_hl, "bg": s:chameleon_sd, "fmt": 
 " Terminal Color Highlight Settings {{{
 "-----------------------------------------------------------------
 
-" Default Colors
-hi NonText      ctermfg=darkgray
+" 8-color Terminal fallback
+if &t_Co == 8
+    call s:t_hi("Visual", {"fg": "green", "bg": "grey"})
+    call s:t_hi("Folded", {"fg": "grey", "bg": "magenta"})
+    call s:t_hi("FoldColumn", {"fg": "grey", "bg": "magenta"})
+    call s:t_hi("Title", {"fg": "white", "fmt": "bold"})
+    call s:t_hi("ColorColumn", {"bg": "darkblue"})
+    call s:t_hi("Pmenu", {"bg": "darkyellow"})
+    call s:t_hi("PmenuSel", {"fg": "darkyellow", "bg": "grey"})
+    call s:t_hi("PmenuSbar", {"fg": "darkyellow", "bg": "black"})
+    call s:t_hi("PmenuThumb", {"fg": "darkyellow", "bg": "grey"})
+    call s:t_hi("DiffAdd", {"fg": "white", "bg": "darkgreen"})
+    call s:t_hi("DiffChange", {"fg": "white", "bg": "darkblue"})
+    call s:t_hi("DiffDelete", {"fg": "red"})
+    call s:t_hi("DiffText", {"fg": "white", "bg": "darkyellow"})
 
-" Search
-hi Search       cterm=none ctermfg=grey ctermbg=blue
-hi IncSearch    cterm=none ctermfg=yellow ctermbg=green
-
-" Window Elements
-hi StatusLine   ctermfg=white ctermbg=green cterm=bold
-hi StatusLineNC ctermfg=lightgray ctermbg=darkgreen
-hi Folded       ctermfg=white ctermbg=magenta
-hi Visual       ctermbg=white ctermfg=lightgreen cterm=reverse
-
-" Specials
-hi Todo         ctermfg=white ctermbg=green
-hi Title        ctermfg=white cterm=bold
-
-" Syntax
-hi Constant     ctermfg=darkyellow
-hi Number       ctermfg=darkblue
-hi Statement    ctermfg=green
-hi Identifier   ctermfg=darkgreen
-hi PreProc      ctermfg=darkred
-hi Comment      ctermfg=cyan cterm=none
-hi Type         ctermfg=gray cterm=bold
-hi Special      ctermfg=magenta cterm=none
-hi Error        ctermfg=white ctermbg=red
-
-" Diff
-hi DiffAdd      ctermfg=gray ctermbg=blue cterm=none
-hi DiffChange   ctermfg=gray ctermbg=darkgray cterm=none
-hi DiffDelete   ctermfg=gray ctermbg=none cterm=none
-hi DiffText     ctermfg=gray ctermbg=yellow cterm=none
+    call s:t_hi("NonText", {"fg": "grey", "fmt": "none"})
+    call s:t_hi("Normal", {"fg": "grey"})
+    call s:t_hi("Type", {"fg": "grey", "fmt": "bold"})
+    call s:t_hi("Comment", {"fg": "darkcyan"})
+    call s:t_hi("Constant", {"fg": "darkyellow"})
+    call s:t_hi("Special", {"fg": "darkmagenta"})
+    call s:t_hi("Identifier", {"fg": "green"})
+    call s:t_hi("Statement", {"fg": "darkgreen"})
+    call s:t_hi("PreProc", {"fg": "darkred"})
+    call s:t_hi("Number", {"fg": "blue"})
+endif
 
 " }}}
 
