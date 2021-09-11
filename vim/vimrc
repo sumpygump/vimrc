@@ -256,17 +256,14 @@ endif
 " Map <leader>5 to Clean up file
 noremap <silent> <leader>5 m`:call Cleanup()<CR>``zz
 
-" Map <leader>8 to highlight chars past 80th col
-noremap <silent> <leader>8 :highlight ColorColumn ctermbg=lightgrey guibg=#204A87<CR>
+" Map <leader>8 to highlight line limit
+noremap <silent> <leader>8 :set colorcolumn=89<CR>
 
-" Map <leader>7 to turn off highlighting chars past 80th col
-noremap <silent> <leader>7 :match none<CR>
+" Map <leader>7 to turn off highlighting line limit
+noremap <silent> <leader>7 :set colorcolumn=<CR>
 
 " Column scroll-binding on <leader>sb
 noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
-
-nnoremap <silent> <leader>] :NextColorScheme<CR>
-nnoremap <silent> <leader>[ :NextColorScheme<CR>
 
 " delete without yanking
 nnoremap <leader>d "_d
