@@ -280,7 +280,6 @@ vnoremap <leader>p "_dP
 if exists(':call')
     call plug#begin('~/.vim/plugged')
     Plug 'alvan/vim-php-manual'
-    Plug 'davidhalter/jedi-vim'
     Plug 'corntrace/bufexplorer'
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'dense-analysis/ale'
@@ -335,15 +334,14 @@ if exists(':let')
     let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:10'
 
     " Settings for ALE
-    let g:ale_linters = {'python': ['pylint']}
-    let g:ale_fixers = {'python': ['black']}
+    let g:ale_lint_on_text_changed = 'never'
+    let g:ale_lint_on_enter = 0
+    let g:ale_linters = {'python': ['pylint'], 'php': ['phpcs'], 'cpp': ['g++']}
+    let g:ale_fixers = {'python': ['black'], 'php': ['phpcbf'], 'cpp': ['astyle']}
     let g:ale_fix_on_save = 1
     let g:ale_pattern_options = {
     \   '.*.venv/.*$': {'ale_enabled': 0},
     \}
-
-    " Settings for jedi-vim
-    let g:jedi#completions_enabled = 0
 endif
 
 " Functions {{{1
