@@ -282,6 +282,7 @@ if exists(':call')
     Plug 'alvan/vim-php-manual'
     Plug 'corntrace/bufexplorer'
     Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'dbeniamine/cheat.sh-vim'
     Plug 'dense-analysis/ale'
     Plug 'ervandew/supertab'
     Plug 'gregsexton/gitv', {'on': ['Gitv']}
@@ -306,7 +307,7 @@ if exists(':call')
 endif
 
 "NerdTree
-let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+let NERDTreeIgnore = ['.DS_Store', '\.pyc$', '__pycache__']
 
 " Lilypond
 if exists(':filetype')
@@ -419,7 +420,9 @@ if exists(':function')
         %s/—/---/g " em-dash
     endfunction
     command! ReplaceSpecialChars call s:ReplaceSpecialChars()
+
     " Switch between two different colorschemes
+    let g:tango_night = 0
     function! s:SwapColorscheme()
         if exists("g:tango_night")
             if g:tango_night == 1
