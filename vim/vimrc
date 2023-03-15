@@ -35,7 +35,7 @@ if exists(':filetype')
     filetype plugin indent on " load filetype plugins/indent settings
 endif
 set background=dark
-set synmaxcol=1024 " Only apply syntax coloring for lines up to x chars
+set synmaxcol=3024 " Only apply syntax coloring for lines up to x chars
 set hlsearch " Highlight search matches
 
 " 6 multiple windows {{{2
@@ -103,8 +103,7 @@ set vb t_vb= " No beeps or flash
 
 " 14 editing text {{{2
 " -----------------------------------
-"set textwidth=79 " Autmatically break long lines while typing
-set textwidth=0 " No breaking of long lines while typing
+set textwidth=88 " Automatically break long lines while typing
 set backspace=indent,eol,start " more powerful backspacing
 set showmatch " Show matching brackets.
 
@@ -397,6 +396,16 @@ if exists(':function')
         " Fix spacing in elseif lines
         %s/}\s*\n*\s*elseif\s*(\(.*\))\s*\n\?\s*{/} elseif (\1) {/e
     endfunction
+
+    " Set tabstops
+    function! SetTabStops(num_spaces)
+        let &tabstop=a:num_spaces " Number of spaces that a tab in the file counts
+        let &shiftwidth=a:num_spaces " Number of spaces to use for auto-indent
+        let &softtabstop=a:num_spaces " How many spaces per tab during edit operations
+        echomsg "Setting tabstops to " . a:num_spaces
+    endfunction
+    nnoremap <leader>t2 :call SetTabStops(2)<CR>
+    nnoremap <leader>t4 :call SetTabStops(4)<CR>
 
     " Check box
     function! s:CheckBox()
