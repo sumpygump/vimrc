@@ -133,6 +133,7 @@ endif
 set fileformats=unix,dos " Support for fileformats
 set nobackup " Don't make backup files
 set autowrite " Automatically save before commands like :next and :make
+set nofixeol " Don't add a blank newline to end of files
 
 " 20 the swap file {{{2
 " -----------------------------------
@@ -242,6 +243,9 @@ nnoremap gb :bnext<CR>
 " Make gr go to previous tab
 nnoremap gr :tabprev<CR>
 
+" Make gi open the file under the cursor in the window above
+nnoremap gi :let mycurf=expand("<cfile>")<cr><c-w>k:execute("e ".mycurf)<cr>
+
 " Keep the text highlighted when tab-shifting
 vnoremap < <gv
 vnoremap > >gv
@@ -284,7 +288,10 @@ if exists(':call')
     Plug 'dbeniamine/cheat.sh-vim'
     Plug 'dense-analysis/ale'
     Plug 'ervandew/supertab'
+    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
     Plug 'gregsexton/gitv', {'on': ['Gitv']}
+    Plug 'hashivim/vim-terraform',
+    Plug 'itchyny/lightline.vim'
     Plug 'leafgarland/typescript-vim'
     Plug 'majutsushi/tagbar', {'on': ['TagbarToggle']}
     Plug 'mileszs/ack.vim'
@@ -296,12 +303,13 @@ if exists(':call')
     Plug 'szw/vim-tags'
     Plug 'tpope/vim-fugitive'
     "Plug 'lvht/phpcd.vim', {'for': 'php', 'do': 'composer install'}
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
+    "Plug 'vim-airline/vim-airline'
+    "Plug 'vim-airline/vim-airline-themes'
     Plug 'vim-scripts/Marks-Browser'
     Plug 'vim-scripts/ShowMarks'
     Plug 'vim-python/python-syntax'
     Plug '~/vimrc/vim/dist-plugins/qis'
+    Plug 'zah/nim.vim'
     call plug#end()
 endif
 
@@ -311,7 +319,7 @@ let NERDTreeIgnore = ['.DS_Store', '\.pyc$', '__pycache__']
 " Lilypond
 if exists(':filetype')
     filetype off
-    set runtimepath+=/usr/share/lilypond/2.18.2/vim/
+    set runtimepath+=/usr/share/lilypond/2.22.1/vim/
     filetype on
 endif
 
@@ -324,7 +332,8 @@ if exists(':let')
     let g:showmarks_ignore_type = "hqm"
 
     " Settings for Ack
-    let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+    "let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+    let g:ackprg="ack -H --nocolor --nogroup --column"
 
     " Supertab uses omni-completion
     "let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
@@ -337,7 +346,7 @@ if exists(':let')
     let g:ale_lint_on_text_changed = 'never'
     let g:ale_lint_on_enter = 0
     let g:ale_linters = {'python': ['pylint'], 'php': ['phpcs'], 'cpp': ['g++']}
-    let g:ale_fixers = {'python': ['black'], 'php': ['phpcbf'], 'cpp': ['astyle']}
+    let g:ale_fixers = {'python': ['black'], 'php': ['phpcbf'], 'cpp': ['astyle'], 'css': ['prettier']}
     let g:ale_fix_on_save = 1
     let g:ale_pattern_options = {
     \   '.*.venv/.*$': {'ale_enabled': 0},
